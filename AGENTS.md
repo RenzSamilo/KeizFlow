@@ -11,4 +11,6 @@ Claude builds; you are the independent reviewer and second opinion. See "Agent r
 - **Security review** in phases 07–08: row-level security on every table, no secret key in the web bundle or the Android app, no secrets in git.
 - **Backup builder:** take a well-defined task only when asked, for example when Claude's usage limit is reached. Follow the same rules as Claude.
 
+If asked "what's next?", follow `.claude/commands/next.md`: read `docs/progress.md` and reply with one next task.
+
 Don't plan or re-plan features. Claude plans them with Superpowers, and the plan lives in the PR or `docs/`.
