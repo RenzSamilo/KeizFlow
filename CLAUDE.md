@@ -49,7 +49,7 @@ Update this section whenever a phase ends or a decision is made. Record the reas
 | Who uses it | You and Claude | Real users |
 | Supabase project | `<app>-dev`, test data you can wipe | `<app>-prod`, real user data, created in phase 07 |
 | Vercel | Preview deployments (every branch and PR) | Production deployment (`main`) |
-| Android | Debug builds on your phone or emulator | Play Store release builds |
+| Android | Debug builds on your phone or emulator | Signed release APK from the download page |
 | Keys | Publishable key in the app, secret key server-side only | Same rule, separate keys |
 
 Unfinished features live on branches, and each branch gets its own preview link. Until phase 07 there is no prod Supabase project, so production also uses dev.
