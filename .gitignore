@@ -8,6 +8,10 @@
 *.keystore
 keystore.properties
 
+# Built app files belong in GitHub Releases, not in git
+*.apk
+*.aab
+
 # Dependencies and build output
 node_modules/
 dist/

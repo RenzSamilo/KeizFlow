@@ -2,6 +2,18 @@
 
 One entry per decision, newest at the top. Keep each entry short: what was decided, why, and what it rules out.
 
+## 2026-10-28 · Ship as a downloadable APK first
+
+- **Decision:** release builds go out as a signed APK on GitHub Releases and a download page on the Vercel site. Play Store waits.
+- **Why:** no store review, no tester-count requirement, faster to get the app onto phones.
+- **Rules out:** automatic updates through the store; users get an in-app "update available" prompt instead.
+
+## 2026-10-28 · Portable design tokens, Superpowers for features only
+
+- **Decision:** tokens live in `design/tokens.json` and generate both web CSS and the Android theme. Superpowers runs for features; visual tweaks are direct prompts.
+- **Why:** one source of truth for the look across platforms; no planning ceremony for a color change.
+- **Rules out:** hand-copying colors into the Android project.
+
 ## 2026-10-28 · Separate dev and prod, automated checks
 
 - **Decision:** two Supabase projects (dev and prod); Vercel previews use dev; secrets only in Vercel, Supabase and a password manager; every PR runs the Checks workflow.
