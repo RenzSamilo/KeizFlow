@@ -11,4 +11,6 @@ Claude builds; you are the independent reviewer and second opinion. See "Agent r
 - **Security review** in phases 07–08: row-level security on every table, no secret key in the web bundle or the Android app, no secrets in git.
 - **Backup builder:** take a well-defined task only when asked, for example when Claude's usage limit is reached. Follow the same rules as Claude.
 
+In Orca, you may run as one of up to 3 parallel agents: a design variant in phase 04, or the test writer in a separate worktree. Stay inside your worktree's branch and don't edit files another agent owns.
+
 Don't plan or re-plan features. Claude plans them with Superpowers, and the plan lives in the PR or `docs/`.

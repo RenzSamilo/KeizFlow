@@ -2,6 +2,12 @@
 
 One entry per decision, newest at the top. Keep each entry short: what was decided, why, and what it rules out.
 
+## 2026-10-28 · Orca for parallel variants and screens (Orca branch)
+
+- **Decision:** use Orca to fan out up to 3 agents for phase 04 UI variants and to run one agent per screen in phase 08. Everything else stays single-agent.
+- **Why:** Orca's worktree-per-agent model matches "try 2–3 variants side by side" and parallel screen ports, without adding a planning layer that competes with Superpowers.
+- **Rules out:** role-based orchestrators (Multica's planner/coder/QA setup); fan-out for small tweaks.
+
 ## 2026-10-28 · Claude builds, Codex reviews
 
 - **Decision:** Claude plans and builds with the skill set. Codex reviews PRs, writes Playwright tests from acceptance criteria, does security reviews, and is the backup builder. ChatGPT handles research and spec challenges. Codex reads `AGENTS.md`, which defers to `CLAUDE.md`.

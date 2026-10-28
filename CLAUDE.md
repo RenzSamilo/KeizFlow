@@ -1,6 +1,8 @@
-# Web-to-Android Workflow
+# Web-to-Android Workflow (Orca variant)
 
 Build a mobile app as a web app on Vercel first, iterate until it feels right, sign it off, then port it to native Android on the same Supabase backend.
+
+This branch is the Orca variant: the same workflow, with parallel agents in Orca for phase 04 variants and phase 08 screens. See "Orca" below. The single-agent workflow lives on `main`.
 
 Workflow map: https://claude.ai/artifact/TzY6HuSm7Hjg5VJWxFNebi
 
@@ -55,6 +57,26 @@ Claude (Claude Code) is the builder. Codex and ChatGPT are the independent secon
 - Only Claude plans features. Codex doesn't re-plan; two planners give competing task lists.
 - Tests written by Codex from the acceptance criteria are kept even when Claude's code disagrees with them: fix the code, or fix the criteria and say so in the PR.
 - When Claude's usage limit is reached, Codex can take a well-defined task under the same rules.
+
+## Orca
+
+[Orca](https://github.com/stablyai/orca) (Stably AI's desktop app, not `orca-cli/orca`) runs several coding agents side by side, each in its own git worktree. Install: `brew install --cask stablyai/orca/orca` on macOS; see its README for Windows and Linux.
+
+| Phase | How Orca is used |
+|---|---|
+| 01–03, 05–07, 09 | Not used. One Claude agent in a normal session. |
+| 04 Iterate: UI variants | Fan out one prompt to up to 3 agents: 2 Claude + 1 Codex, or 3 Claude with different design directions. Compare the previews, merge one, delete the rest. |
+| 04 Iterate: features | One Claude agent builds the feature; a second worktree has Codex write the Playwright tests from the same acceptance criteria. |
+| 08 Android port | One Claude agent per screen, each in its own worktree, all checked against the same acceptance criteria. Codex reviews each before merge. |
+
+Rules:
+
+- **Fan-out is for real choices** (layouts, design directions, competing approaches). Small tweaks and bug fixes use one agent.
+- **At most 3 parallel agents.** That matches the 3-variants-per-round timebox and keeps review manageable.
+- **Every worktree is a branch.** Push it so Vercel builds a preview link, or run each worktree's dev server on its own port.
+- **One winner per fan-out.** Merge it through a normal PR (Checks must pass); delete the losing branches the same day.
+- **No two agents edit the same files** in phase 08. Split work by screen, and keep shared files (data module, tokens, navigation) with one agent.
+- Superpowers still plans the feature first; Orca only runs the plan's tasks in parallel.
 
 ## Automated checks
 
@@ -131,6 +153,8 @@ Install once per computer in Claude Code (send each line as its own message):
 | UI UX Pro Max | 02, 04: generates the design system and palettes |
 | Impeccable | 04, 05, 08: `/critique`, `/polish`, `/audit` |
 | I Have ADHD | All: answer-first replies |
+
+Workspace: Orca (04, 08), see "Orca" above.
 
 Add later: Agent Reach (01 research), REA (01, 04, 09), Understand Anything or Graphify (06, 08).
 
