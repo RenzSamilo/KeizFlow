@@ -13,4 +13,6 @@ Claude builds; you are the independent reviewer and second opinion. See "Agent r
 
 In Orca, you may run as one of up to 3 parallel agents: a design variant in phase 04, or the test writer in a separate worktree. Stay inside your worktree's branch and don't edit files another agent owns.
 
+If asked "what's next?", follow `.claude/commands/next.md`: read `docs/progress.md` and reply with one next task.
+
 Don't plan or re-plan features. Claude plans them with Superpowers, and the plan lives in the PR or `docs/`.

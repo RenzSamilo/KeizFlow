@@ -32,6 +32,7 @@ Update this section whenever a phase ends or a decision is made. Record the reas
 ## Rules for Claude
 
 - Read this file and `docs/decisions.md` at the start of every session.
+- Track progress in `docs/progress.md`: tick a step when it's done. Type `/next` any time to get one next task (`.claude/commands/next.md`). Don't start work outside the current step without saying so.
 - Keep `AGENTS.md` in sync when roles or rules change; it only points here and describes Codex's role.
 - Every screen reads and writes data through the single data module. Never call Supabase or fake data directly from a screen.
 - Write a feature's acceptance criteria before building it. Each main flow gets a Playwright test that runs in Chromium with an Android phone profile.
