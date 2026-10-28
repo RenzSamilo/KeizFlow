@@ -5,6 +5,7 @@ Build a mobile app as a web app on Vercel first, iterate until it feels right, s
 This branch is the Orca variant: the same workflow, with parallel agents in Orca for phase 04 variants and phase 08 screens. See "Orca" below. The single-agent workflow lives on `main`.
 
 Workflow map: https://claude.ai/artifact/TzY6HuSm7Hjg5VJWxFNebi
+Orca agent map (who does each step, where Codex reviews): https://claude.ai/artifact/Gv3M9WNHsnPzMcRHAC5HET
 
 ## Current state
 
@@ -52,6 +53,7 @@ Claude (Claude Code) is the builder. Codex and ChatGPT are the independent secon
 | 02–03 Scaffold | Builds everything | Reviews the porting-strategy decision |
 | 04 Iterate | Builds features and variants | Reviews every PR; writes Playwright tests from the acceptance criteria |
 | 05 Sign-off | Impeccable `/audit` | Full review of the app before it's frozen |
+| 06 Native stack | Compares options and recommends one | Codex critiques the recommendation before you approve; ChatGPT for a second view |
 | 07–08 Backend and port | Builds | Security review: row-level security, secret handling |
 | 09 Release | Release tasks | ChatGPT: icon ideas, download-page copy |
 

@@ -6,6 +6,8 @@ A template repo for building a mobile app the fast way: prototype it as a web ap
 
 Workflow map: https://claude.ai/artifact/TzY6HuSm7Hjg5VJWxFNebi
 
+Orca agent map, with every step labeled Claude, Codex, ChatGPT or you, and each Codex review marked: https://claude.ai/artifact/Gv3M9WNHsnPzMcRHAC5HET
+
 ## Quick start
 
 1. Create your app's repo from this one (GitHub: **Use this template**, or copy the files).
