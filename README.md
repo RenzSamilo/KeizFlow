@@ -135,6 +135,19 @@ Paste a recipe's prompt into Claude in Orca. The orchestrator runs the workers a
 - No two agents edit the same files.
 - `/next` shows a **Waiting on you** inbox first: decision gates, worker questions, branches to review. Nothing new starts while work waits on you.
 
+### Review flow
+
+| Step | Where | What |
+|---|---|---|
+| 1. Build | Orca | Claude finishes the change in its worktree |
+| 2. Local review | Orca | Codex terminal in the same worktree → `/review`; fix serious issues before pushing |
+| 3. Open PR | GitHub | Checks workflow runs |
+| 4. Automatic review | GitHub (also visible in Orca) | Codex posts a review on the PR |
+| 5. Fix | Orca | `orca worktree create --pr <number>`, Claude fixes each comment, or reply why it stays |
+| 6. Merge | GitHub | Checks green, no Codex comment unanswered |
+
+Small visual tweaks can skip step 2.
+
 ### Orca CLI commands you'll see
 
 | Command | What it does |

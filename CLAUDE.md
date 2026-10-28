@@ -106,6 +106,19 @@ Orchestration is experimental: turn it on in Orca's **Settings → Experimental*
 
 Not used on purpose: SSH worktrees, per-workspace cloud environments, Linear/Jira, Computer Use. They add setup without speeding up a solo workflow.
 
+### Review flow
+
+Every change gets two Codex reviews: a quick local one in Orca before pushing, and the automatic one on GitHub before merging. Both follow the "Review guidelines" in `AGENTS.md`.
+
+1. **Build:** Claude finishes the change in its worktree.
+2. **Local review (Orca):** open a Codex terminal in the same worktree and run `/review`. Fix anything serious with Claude in that worktree. Use Orca's diff annotations for your own comments.
+3. **Push and open the PR.** The Checks workflow runs.
+4. **GitHub review (automatic):** Codex posts a review on the PR. Read it on GitHub or in Orca's PR view.
+5. **Fix:** for each Codex comment, open the PR's worktree (`orca worktree create --pr <number>`) and have Claude fix it, or reply on the comment explaining why it stays. Push; Codex re-reviews when asked with `@codex review`.
+6. **Merge** when checks are green and no Codex comment is left unanswered.
+
+Skip step 2 for small visual tweaks; the GitHub review still runs. If Codex's automatic review doesn't appear, check that the repo has a Codex environment (chatgpt.com/codex/cloud/settings/environments).
+
 ## Automated checks
 
 `.github/workflows/checks.yml` runs on every pull request and every push to `main`: lint, type check, unit tests, build, then Playwright browser tests in Chromium. Each step runs only once the app defines it (`npm run lint`, `typecheck`, `test`, `build`, `playwright.config.*`).

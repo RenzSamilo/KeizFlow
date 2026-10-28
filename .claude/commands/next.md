@@ -20,7 +20,9 @@ Use the Orca CLI: `orca`, or `orca-ide` on Linux outside an Orca terminal (never
 - `orca orchestration worker-list --json`: supervised workers and whether they need attention.
 - `orca orchestration gate-list --json` (if the command exists): decision gates waiting for an answer.
 
-Sort what you find into **Waiting on you** (an open decision gate, a worker asking a question, a finished worker whose branch has no PR or an unreviewed PR, an agent waiting for input) and **Still running**. Ignore idle worktrees with no changes.
+Also check open PRs (`gh pr list` or the GitHub view in Orca) for Codex review comments nobody has answered.
+
+Sort what you find into **Waiting on you** (an open decision gate, a worker asking a question, a finished worker whose branch has no PR or an unreviewed PR, unanswered Codex review comments, an agent waiting for input) and **Still running**. Ignore idle worktrees with no changes.
 
 What the user said (may be empty): $ARGUMENTS
 

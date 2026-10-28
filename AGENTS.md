@@ -19,7 +19,7 @@ Don't plan or re-plan features. Claude plans them with Superpowers, and the plan
 
 ## Review guidelines
 
-Codex code review reads this section on every pull request, whether triggered automatically or by an `@codex review` comment.
+Codex code review reads this section on every pull request, whether triggered automatically or by an `@codex review` comment. Apply the same rules to a local `/review` in an Orca worktree before the PR is opened (see "Review flow" in `CLAUDE.md`).
 
 - Check the change against the feature's acceptance criteria, written in the PR description or linked from it. Flag any criterion with no code or no test behind it.
 - Screens must read and write data only through the single data module, never Supabase or fake data directly.
