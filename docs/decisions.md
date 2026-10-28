@@ -2,6 +2,12 @@
 
 One entry per decision, newest at the top. Keep each entry short: what was decided, why, and what it rules out.
 
+## 2026-10-28 · Claude builds, Codex reviews
+
+- **Decision:** Claude plans and builds with the skill set. Codex reviews PRs, writes Playwright tests from acceptance criteria, does security reviews, and is the backup builder. ChatGPT handles research and spec challenges. Codex reads `AGENTS.md`, which defers to `CLAUDE.md`.
+- **Why:** the skills are Claude Code plugins; a different model catches different mistakes; one planner avoids competing task lists.
+- **Rules out:** Codex as orchestrator or planner.
+
 ## 2026-10-28 · Ship as a downloadable APK first
 
 - **Decision:** release builds go out as a signed APK on GitHub Releases and a download page on the Vercel site. Play Store waits.
