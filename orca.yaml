@@ -1,0 +1,19 @@
+# Orca project settings. Orca reads this from the primary checkout.
+# Setup runs in every new worktree, so each agent starts with a working app.
+
+scripts:
+  setup: |
+    cd "$ORCA_WORKTREE_PATH"
+    # Copy local env values (never committed) from the main checkout.
+    if [ -f "$ORCA_ROOT_PATH/.env.local" ]; then cp "$ORCA_ROOT_PATH/.env.local" "$ORCA_WORKTREE_PATH/.env.local"; fi
+    # Install dependencies once the app exists.
+    if [ -f package-lock.json ]; then npm ci; elif [ -f package.json ]; then npm install; fi
+
+# Agents wait for setup to finish before starting.
+setupAgentStartupPolicy: wait-for-setup
+
+# Tabs opened in every new worktree.
+defaultTabs:
+  - title: Dev server
+    command: if [ -f package.json ]; then npm run dev; else echo "No app yet. Run /next to see what to do."; fi
+    color: "#1d6fd6"

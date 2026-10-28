@@ -80,6 +80,32 @@ Rules:
 - **No two agents edit the same files** in phase 08. Split work by screen, and keep shared files (data module, tokens, navigation) with one agent.
 - Superpowers still plans the feature first; Orca only runs the plan's tasks in parallel.
 
+### Recipes
+
+Ready-made plans for Orca's orchestration skill, in `docs/orca/recipes/`. Each has a prompt to paste into Claude in Orca, and stops at a decision gate for you.
+
+| Recipe | Phase | What it runs |
+|---|---|---|
+| `variant-fanout.md` | 04 | Up to 3 design directions for one screen → you pick the winner |
+| `feature-test-pair.md` | 04 | Claude builds the feature while Codex writes its tests |
+| `screen-port-wave.md` | 08 | Shared files first, then up to 3 screens in parallel, parity check on the emulator |
+
+Orchestration is experimental: turn it on in Orca's **Settings → Experimental**. Task specs follow Orca's format: target, change, constraints, ownership, observable acceptance.
+
+### Orca features this workflow uses
+
+| Feature | Phase | Why |
+|---|---|---|
+| `orca.yaml` setup script | All | Every new worktree copies `.env.local` and installs dependencies, then opens a dev-server tab |
+| Design Mode | 04 | Click a UI element in Orca's Chromium window to send its HTML, CSS and a screenshot to the agent. Fastest way to make small visual tweaks. |
+| Annotate AI diffs | 04, 08 | Comment on diff lines and send them back to the agent instead of retyping feedback |
+| Notifications and mobile companion | All | Get pinged when an agent finishes or needs you, instead of watching terminals |
+| Usage tracking | All | See Claude and Codex limits and resets; switch to Codex as backup builder when Claude runs out |
+| GitHub PRs in-app | 04–09 | Open a worktree from a PR (`orca worktree create --pr <number>`) to review Codex's comments in place |
+| Android emulator pane | 08, 09 | Agents install the debug APK, tap through acceptance criteria, and read logcat (`orca emulator ...`) |
+
+Not used on purpose: SSH worktrees, per-workspace cloud environments, Linear/Jira, Computer Use. They add setup without speeding up a solo workflow.
+
 ## Automated checks
 
 `.github/workflows/checks.yml` runs on every pull request and every push to `main`: lint, type check, unit tests, build, then Playwright browser tests in Chromium. Each step runs only once the app defines it (`npm run lint`, `typecheck`, `test`, `build`, `playwright.config.*`).

@@ -1,4 +1,6 @@
-# Web-to-Android Workflow
+# Web-to-Android Workflow (Orca variant)
+
+> This is the `workflow-orca` branch: the same workflow as `main`, plus [Orca](https://github.com/stablyai/orca) for parallel agents. See [Orca](#orca) below.
 
 A template repo for building a mobile app the fast way: prototype it as a web app on Vercel, iterate until it feels right, sign it off, then port it to native Android on the same Supabase backend.
 
@@ -90,6 +92,8 @@ Codex follows the "Review guidelines" in [`AGENTS.md`](AGENTS.md).
 | [`.claude/commands/next.md`](.claude/commands/next.md) | The `/next` command |
 | [`.github/workflows/checks.yml`](.github/workflows/checks.yml) | Lint, type check, tests, build and Chromium browser tests on every PR |
 | [`.env.example`](.env.example) | Environment variable names, no values |
+| [`orca.yaml`](orca.yaml) | Orca setup for every new worktree |
+| [`docs/orca/recipes/`](docs/orca/recipes/) | Orchestration recipes |
 
 ## Key rules
 
@@ -103,9 +107,49 @@ Codex follows the "Review guidelines" in [`AGENTS.md`](AGENTS.md).
 - **Dev vs prod:** previews use the dev Supabase project; real users only touch prod.
 - **APK first:** v1 ships as a signed APK on GitHub Releases and a download page. Play Store comes later.
 
+## Orca
+
+[Orca](https://github.com/stablyai/orca) runs several coding agents side by side, each in its own git worktree. This workflow uses it in two places only: design variants in phase 04 and screen ports in phase 08. Everything else stays single-agent.
+
+### Setup (once)
+
+1. Install Orca: [download](https://onorca.dev/download), or `brew install --cask stablyai/orca/orca` on macOS.
+2. Turn on orchestration: **Settings → Experimental**.
+3. Optional: pair the Orca mobile app to get notified when agents finish.
+4. `orca.yaml` in this repo already sets up every new worktree: copies `.env.local`, installs dependencies, opens a dev-server tab.
+
+### Recipes
+
+Paste a recipe's prompt into Claude in Orca. The orchestrator runs the workers and stops at a decision gate for you.
+
+| Recipe | Phase | Runs |
+|---|---|---|
+| [`variant-fanout`](docs/orca/recipes/variant-fanout.md) | 04 | Up to 3 design directions → you pick one |
+| [`feature-test-pair`](docs/orca/recipes/feature-test-pair.md) | 04 | Claude builds the feature, Codex writes its tests in parallel |
+| [`screen-port-wave`](docs/orca/recipes/screen-port-wave.md) | 08 | Shared files first, then up to 3 screens, parity check on the emulator |
+
+### Rules
+
+- At most 3 parallel agents. Fan out only for real choices, never small tweaks.
+- One winner per fan-out; delete the rest the same day.
+- No two agents edit the same files.
+- `/next` shows a **Waiting on you** inbox first: decision gates, worker questions, branches to review. Nothing new starts while work waits on you.
+
+### Orca CLI commands you'll see
+
+| Command | What it does |
+|---|---|
+| `orca worktree ps --json` | Every worktree and its agent's state |
+| `orca ports --json` | Which local port each worktree's dev server uses |
+| `orca worktree create --pr <number>` | Open a worktree from a PR to review it |
+| `orca emulator install ./app-debug.apk` | Install the debug build on the Android emulator |
+| `orca emulator logcat --lines 200` | Recent Android logs, for crashes |
+
+On Linux, outside Orca's own terminals, the command is `orca-ide` (bare `orca` may start the GNOME screen reader).
+
 ## Branches
 
 | Branch | What it is |
 |---|---|
-| `main` | The single-agent workflow (this one) |
-| `workflow-orca` | The same workflow plus [Orca](https://github.com/stablyai/orca) for parallel agents: design variants in phase 04 and screen ports in phase 08 |
+| `main` | The single-agent workflow |
+| `workflow-orca` | This one: the same workflow plus Orca for parallel agents |

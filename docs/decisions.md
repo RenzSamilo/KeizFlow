@@ -2,6 +2,12 @@
 
 One entry per decision, newest at the top. Keep each entry short: what was decided, why, and what it rules out.
 
+## 2026-10-28 · Orca recipes, review inbox and worktree setup (Orca branch)
+
+- **Decision:** three orchestration recipes (variant fan-out, feature + test pair, screen port wave) with decision gates; `/next` shows a "Waiting on you" inbox from Orca first; `orca.yaml` sets up every worktree.
+- **Why:** parallel agents only help if their output gets reviewed; the inbox and gates keep the user from losing track.
+- **Rules out:** SSH worktrees, cloud environments, Linear/Jira and Computer Use for now.
+
 ## 2026-10-28 · Orca for parallel variants and screens (Orca branch)
 
 - **Decision:** use Orca to fan out up to 3 agents for phase 04 UI variants and to run one agent per screen in phase 08. Everything else stays single-agent.
