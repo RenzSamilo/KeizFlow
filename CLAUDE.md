@@ -53,6 +53,7 @@ Claude (Claude Code) is the builder. Codex and ChatGPT are the independent secon
 | 07–08 Backend and port | Builds | Security review: row-level security, secret handling |
 | 09 Release | Release tasks | ChatGPT: icon ideas, download-page copy |
 
+- Codex reviews every PR automatically: in Codex settings, turn on **Code review** and **Automatic reviews** for the repo (needs Codex cloud connected to GitHub). Comment `@codex review` to request one by hand, or `@codex review for security regressions` to focus it. Its rules are the "Review guidelines" section of `AGENTS.md`.
 - Only Claude plans features. Codex doesn't re-plan; two planners give competing task lists.
 - Tests written by Codex from the acceptance criteria are kept even when Claude's code disagrees with them: fix the code, or fix the criteria and say so in the PR.
 - When Claude's usage limit is reached, Codex can take a well-defined task under the same rules.
