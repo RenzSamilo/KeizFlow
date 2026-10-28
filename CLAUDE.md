@@ -30,6 +30,7 @@ Update this section whenever a phase ends or a decision is made. Record the reas
 ## Rules for Claude
 
 - Read this file and `docs/decisions.md` at the start of every session.
+- Keep `AGENTS.md` in sync when roles or rules change; it only points here and describes Codex's role.
 - Every screen reads and writes data through the single data module. Never call Supabase or fake data directly from a screen.
 - Write a feature's acceptance criteria before building it. Each main flow gets a Playwright test that runs in Chromium with an Android phone profile.
 - Ideas that are not in the v1 feature list go to `docs/parking-lot.md`, not into the code.
@@ -37,6 +38,23 @@ Update this section whenever a phase ends or a decision is made. Record the reas
 - Use Superpowers' brainstorm → plan cycle for new features. Small visual tweaks (colors, spacing, copy, one component's layout) are direct prompts without it.
 - Never commit secrets or signing keys. Real values live in Vercel, Supabase and a password manager; `.env.example` lists the names only.
 - A pull request merges only when the Checks workflow is green.
+
+## Agent roles
+
+Claude (Claude Code) is the builder. Codex and ChatGPT are the independent second opinion. Codex reads `AGENTS.md`, which points back to this file.
+
+| Phase | Claude: plans and builds | Codex / ChatGPT: reviews and challenges |
+|---|---|---|
+| 01 Idea | Superpowers brainstorm → spec | ChatGPT: challenge the spec, research, transcribe videos |
+| 02–03 Scaffold | Builds everything | Reviews the porting-strategy decision |
+| 04 Iterate | Builds features and variants | Reviews every PR; writes Playwright tests from the acceptance criteria |
+| 05 Sign-off | Impeccable `/audit` | Full review of the app before it's frozen |
+| 07–08 Backend and port | Builds | Security review: row-level security, secret handling |
+| 09 Release | Release tasks | ChatGPT: icon ideas, download-page copy |
+
+- Only Claude plans features. Codex doesn't re-plan; two planners give competing task lists.
+- Tests written by Codex from the acceptance criteria are kept even when Claude's code disagrees with them: fix the code, or fix the criteria and say so in the PR.
+- When Claude's usage limit is reached, Codex can take a well-defined task under the same rules.
 
 ## Automated checks
 
