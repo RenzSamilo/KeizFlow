@@ -16,3 +16,15 @@ In Orca, you may run as one of up to 3 parallel agents: a design variant in phas
 If asked "what's next?", follow `.claude/commands/next.md`: read `docs/progress.md` and reply with one next task.
 
 Don't plan or re-plan features. Claude plans them with Superpowers, and the plan lives in the PR or `docs/`.
+
+## Review guidelines
+
+Codex code review reads this section on every pull request, whether triggered automatically or by an `@codex review` comment.
+
+- Check the change against the feature's acceptance criteria, written in the PR description or linked from it. Flag any criterion with no code or no test behind it.
+- Screens must read and write data only through the single data module, never Supabase or fake data directly.
+- Colors, fonts and spacing come from `design/tokens.json` or files generated from it. Flag hard-coded values and hand-edited generated theme files.
+- No secrets in the diff: no `.env` files, Supabase secret keys, keystores or passwords. The Supabase secret key must never reach the web bundle or the Android app.
+- Every Supabase table has row-level security enabled, with policies that limit users to their own data.
+- New ideas outside the PR's feature belong in `docs/parking-lot.md`, not in the code.
+- Don't comment on formatting or naming the linter already enforces.
