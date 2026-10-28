@@ -2,6 +2,12 @@
 
 One entry per decision, newest at the top. Keep each entry short: what was decided, why, and what it rules out.
 
+## 2026-10-28 · Separate dev and prod, automated checks
+
+- **Decision:** two Supabase projects (dev and prod); Vercel previews use dev; secrets only in Vercel, Supabase and a password manager; every PR runs the Checks workflow.
+- **Why:** experiments can't touch real user data, keys never leak through git, and broken code never reaches a preview.
+- **Rules out:** one shared database for testing and real users; committing `.env` files or signing keys.
+
 ## 2026-10-28 · Adopt the Web-to-Android workflow
 
 - **Decision:** build each app as a Vercel web app first, then port it to native Android on the same Supabase backend. Phases and rules are in `CLAUDE.md`.

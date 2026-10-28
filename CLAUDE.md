@@ -34,6 +34,26 @@ Update this section whenever a phase ends or a decision is made. Record the reas
 - Write a feature's acceptance criteria before building it. Each main flow gets a Playwright test that runs in Chromium with an Android phone profile.
 - Ideas that are not in the v1 feature list go to `docs/parking-lot.md`, not into the code.
 - Keep design tokens (colors, fonts, spacing) in one file.
+- Never commit secrets or signing keys. Real values live in Vercel, Supabase and a password manager; `.env.example` lists the names only.
+- A pull request merges only when the Checks workflow is green.
+
+## Automated checks
+
+`.github/workflows/checks.yml` runs on every pull request and every push to `main`: lint, type check, unit tests, build, then Playwright browser tests in Chromium. Each step runs only once the app defines it (`npm run lint`, `typecheck`, `test`, `build`, `playwright.config.*`).
+
+## Environments
+
+| | Dev | Prod |
+|---|---|---|
+| Who uses it | You and Claude | Real users |
+| Supabase project | `<app>-dev`, test data you can wipe | `<app>-prod`, real user data, created in phase 07 |
+| Vercel | Preview deployments (every branch and PR) | Production deployment (`main`) |
+| Android | Debug builds on your phone or emulator | Play Store release builds |
+| Keys | Publishable key in the app, secret key server-side only | Same rule, separate keys |
+
+Unfinished features live on branches, and each branch gets its own preview link. Until phase 07 there is no prod Supabase project, so production also uses dev.
+
+Android signing: turn on Play App Signing, and keep the upload key and its passwords in a password manager plus one offline backup. Without the upload key you have to go through Google support to publish updates.
 
 ## Iterate loop timebox (phase 04)
 
@@ -50,6 +70,7 @@ Update this section whenever a phase ends or a decision is made. Record the reas
 - Web app runs on the dev Supabase backend; data model frozen
 - Every feature has written acceptance criteria
 - Browser tests pass for every main flow
+- Checks workflow green on `main`
 - Tagged release in git, e.g. `web-v1`
 - Screenshot set of every screen saved
 
