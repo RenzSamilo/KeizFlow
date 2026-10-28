@@ -1,0 +1,53 @@
+# Automated checks on every pull request and every push to main.
+# Each step runs only if the app defines it, so this works before the
+# web stack is chosen and keeps working after.
+name: Checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Detect app
+        id: detect
+        run: |
+          if [ -f package.json ]; then echo "app=true" >> "$GITHUB_OUTPUT"; else echo "app=false" >> "$GITHUB_OUTPUT"; echo "No package.json yet, skipping checks."; fi
+          if ls playwright.config.* >/dev/null 2>&1; then echo "e2e=true" >> "$GITHUB_OUTPUT"; else echo "e2e=false" >> "$GITHUB_OUTPUT"; fi
+
+      - uses: actions/setup-node@v4
+        if: steps.detect.outputs.app == 'true'
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        if: steps.detect.outputs.app == 'true'
+        run: npm ci
+
+      - name: Lint
+        if: steps.detect.outputs.app == 'true'
+        run: npm run lint --if-present
+
+      - name: Type check
+        if: steps.detect.outputs.app == 'true'
+        run: npm run typecheck --if-present
+
+      - name: Unit tests
+        if: steps.detect.outputs.app == 'true'
+        run: npm test --if-present
+
+      - name: Build
+        if: steps.detect.outputs.app == 'true'
+        run: npm run build --if-present
+
+      - name: Browser tests (Chromium)
+        if: steps.detect.outputs.e2e == 'true'
+        run: |
+          npx playwright install --with-deps chromium
+          npx playwright test --project=chromium

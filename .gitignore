@@ -1,0 +1,24 @@
+# Secrets: real values live in Vercel, Supabase and your password manager
+.env
+.env.*
+!.env.example
+
+# Android signing keys: never commit, back up in a password manager
+*.jks
+*.keystore
+keystore.properties
+
+# Built app files belong in GitHub Releases, not in git
+*.apk
+*.aab
+
+# Dependencies and build output
+node_modules/
+dist/
+build/
+.next/
+.vercel/
+
+# Test output
+test-results/
+playwright-report/
