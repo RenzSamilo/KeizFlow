@@ -82,6 +82,13 @@ Decided 29 Oct. The old bottleneck was one card at a time, with each App Builder
 4. **Each lane is reviewed and merged on its own** through the normal loop. No lane stacks on an unmerged one; all of them start from the merged contract.
 5. **Integration check.** When all lanes are merged, the Test Writer runs the full browser tests on the preview. Failures become new lane cards.
 
+Agent profiles for the two new agents, built from [agency-agents](https://github.com/msitarzewski/agency-agents) plus the shared library rules:
+
+| New agent | Main base | Borrow from | Leave out |
+|---|---|---|---|
+| Test Writer | `testing/testing-test-automation-engineer.md` (Playwright, no sleeps, role selectors, flake fixing) | `testing-evidence-collector.md` (marks untested scope honestly = NOT VERIFIED); `testing-api-tester.md` (tests for data-module functions) | Evidence Collector's screenshots saved into the repo (`public/qa-screenshots`): evidence never goes in git; Cypress parts |
+| Backend Builder | `engineering/engineering-backend-architect.md` | `engineering-database-optimizer.md` (Supabase, Postgres schema); `engineering-identity-access-engineer.md` (row-level security); `engineering-minimal-change-engineer.md` (no scope creep) | Microservices and cloud-infrastructure parts; enterprise SSO/SCIM |
+
 Limits: at most 3 lanes per feature, so the Reviewer and Co-Founder can keep up (the daemon allows 20). Run cap and next-move count stay per card. Backend lanes are medium risk at least (§4 item 2), so you approve those merges.
 
 ## 4. Rules to merge
