@@ -79,15 +79,17 @@ Codex follows the "Review guidelines" in [`AGENTS.md`](AGENTS.md).
 | | Role |
 |---|---|
 | Claude | Plans every feature with Superpowers and builds it. The only planner. |
-| Codex | Reviews every PR, writes Playwright tests from acceptance criteria, security review in phases 07–08. Backup builder. |
+| Codex | Reviews every PR, security review in phases 07–08. Backup builder. |
 | ChatGPT | Challenges the spec, research, transcripts, icon ideas, download-page copy. |
+| Gemini | Sub-builder: writes Playwright tests from acceptance criteria and does scoped chores (Antigravity CLI in Orca, Jules on GitHub). Deep Research in phases 01 and 06. Backup builder. |
 
 ## Files
 
 | File | Purpose |
 |---|---|
 | [`CLAUDE.md`](CLAUDE.md) | Source of truth: current state, rules, environments, release path. Claude reads it every session. |
-| [`AGENTS.md`](AGENTS.md) | Codex's role and review guidelines; defers to `CLAUDE.md` |
+| [`AGENTS.md`](AGENTS.md) | Codex's and Gemini's roles and the review guidelines; defers to `CLAUDE.md` |
+| [`GEMINI.md`](GEMINI.md) | Points Gemini to `AGENTS.md` and `CLAUDE.md` |
 | [`docs/progress.md`](docs/progress.md) | Checklist of every step; `/next` reads it |
 | [`docs/decisions.md`](docs/decisions.md) | Decision log: what, why, what it rules out |
 | [`docs/parking-lot.md`](docs/parking-lot.md) | Ideas that wait until after v1 |
@@ -100,7 +102,7 @@ Codex follows the "Review guidelines" in [`AGENTS.md`](AGENTS.md).
 ## Key rules
 
 - **One data module:** screens never call Supabase or fake data directly.
-- **Acceptance criteria first:** written before a feature is built; Codex turns them into Playwright tests.
+- **Acceptance criteria first:** written before a feature is built; Gemini turns them into Playwright tests.
 - **Timeboxed rounds:** phase 04 rounds last at most 1 week or 3 variants per screen.
 - **Parking lot:** ideas outside the current step get written down, not built.
 - **Tokens in one file:** `design/tokens.json` generates both web CSS and the Android theme.
@@ -127,7 +129,7 @@ Paste a recipe's prompt into Claude in Orca. The orchestrator runs the workers a
 | Recipe | Phase | Runs |
 |---|---|---|
 | [`variant-fanout`](docs/orca/recipes/variant-fanout.md) | 04 | Up to 3 design directions → you pick one |
-| [`feature-test-pair`](docs/orca/recipes/feature-test-pair.md) | 04 | Claude builds the feature, Codex writes its tests in parallel |
+| [`feature-test-pair`](docs/orca/recipes/feature-test-pair.md) | 04 | Claude builds the feature, Gemini writes its tests in parallel |
 | [`screen-port-wave`](docs/orca/recipes/screen-port-wave.md) | 08 | Shared files first, then up to 3 screens, parity check on the emulator |
 
 ### Rules

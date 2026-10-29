@@ -7,15 +7,24 @@ This repo follows the Web-to-Android workflow. **`CLAUDE.md` is the single sourc
 Claude builds; you are the independent reviewer and second opinion. See "Agent roles" in `CLAUDE.md`.
 
 - **Review pull requests:** check the diff against the feature's acceptance criteria and the rules in `CLAUDE.md`. Report bugs, missing tests and rule breaks; don't restyle working code.
-- **Write browser tests:** turn acceptance criteria into Playwright tests (Chromium, Android phone profile) without looking at how the feature was built.
 - **Security review** in phases 07–08: row-level security on every table, no secret key in the web bundle or the Android app, no secrets in git.
 - **Backup builder:** take a well-defined task only when asked, for example when Claude's usage limit is reached. Follow the same rules as Claude.
 
-In Orca, you may run as one of up to 3 parallel agents: a design variant in phase 04, or the test writer in a separate worktree. Stay inside your worktree's branch and don't edit files another agent owns.
+In Orca, you may run as one of up to 3 parallel agents: or a design variant in phase 04. Stay inside your worktree's branch and don't edit files another agent owns.
 
 If asked "what's next?", follow `.claude/commands/next.md`: read `docs/progress.md` and reply with one next task.
 
 Don't plan or re-plan features. Claude plans them with Superpowers, and the plan lives in the PR or `docs/`.
+
+## Your role (Gemini)
+
+Claude builds and plans; you are the sub-builder. You run as Antigravity CLI in an Orca worktree, or as Jules on GitHub. See "Agent roles" in `CLAUDE.md`.
+
+- **Write browser tests:** turn acceptance criteria into Playwright tests (Chromium, Android phone profile) without looking at how the feature was built.
+- **Scoped chores:** dependency bumps, copy fixes and small refactors that Claude or the user hands you, one task at a time, touching only the files named.
+- **Open a PR for every task.** Codex reviews it; don't review other agents' PRs.
+
+Don't plan or re-plan features, and don't build features unless asked as a backup builder. Stay inside your worktree's branch and don't edit files another agent owns.
 
 ## Review guidelines
 

@@ -1,6 +1,6 @@
 # Recipe: Feature + test pair (phase 04)
 
-Claude builds a feature while Codex writes its Playwright tests from the same acceptance criteria, at the same time. Tests come from a different author than the code, so they catch more.
+Claude builds a feature while Gemini (Antigravity CLI) writes its Playwright tests from the same acceptance criteria, at the same time. Tests come from a different author than the code, so they catch more.
 
 **Use it for:** any new feature with written acceptance criteria.
 **Don't use it for:** visual tweaks with no behavior to test.
@@ -23,7 +23,7 @@ Supervise both workers and report back when the tests pass against the feature, 
 1. Creates one Run with the objective "Feature + tests: [feature]".
 2. Creates two tasks:
    - **Build** (Claude): implements the feature.
-   - **Tests** (Codex): writes Playwright tests for every acceptance criterion, without reading the build branch.
+   - **Tests** (Gemini): writes Playwright tests for every acceptance criterion, without reading the build branch.
 3. Starts both workers at once, each in its own new worktree.
 4. When both finish: merges the tests branch into the build branch and runs the tests.
 5. If tests fail, it does **not** change the tests to make them pass. It asks you: fix the code, or change the criterion?
@@ -38,7 +38,7 @@ Supervise both workers and report back when the tests pass against the feature, 
 - **Ownership:** may edit the feature's files. Must not create or edit files under the Playwright test folder.
 - **Observable acceptance:** app builds, lint and type check pass, `worker_done` lists the files changed.
 
-**Tests worker (Codex)**
+**Tests worker (Gemini, Antigravity CLI)**
 - **Target:** the Playwright test folder only.
 - **Change:** one test per acceptance criterion, in Chromium with an Android phone profile.
 - **Constraints:** test behavior a user can see, not internal code; don't read the build branch.

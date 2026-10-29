@@ -2,6 +2,12 @@
 
 One entry per decision, newest at the top. Keep each entry short: what was decided, why, and what it rules out.
 
+## 2026-10-29 · Gemini joins as sub-builder and researcher
+
+- **Decision:** Gemini (Google AI Pro) writes Playwright tests from acceptance criteria and takes scoped chores that Claude hands off, through Antigravity CLI in Orca or Jules on GitHub. It also runs Deep Research in phases 01 and 06. Codex keeps PR and security review and no longer writes tests.
+- **Why:** Codex no longer reviews tests it wrote; a third model writes tests independently of the builder; one reviewer per PR keeps comments manageable. Gemini CLI stopped serving AI Pro accounts on 2026-06-18, so Antigravity CLI is the terminal agent, and Orca and Multica both support it.
+- **Rules out:** Gemini as planner or second PR reviewer; Gemini building whole features except as backup builder.
+
 ## 2026-10-28 · Orca recipes, review inbox and worktree setup (Orca branch)
 
 - **Decision:** three orchestration recipes (variant fan-out, feature + test pair, screen port wave) with decision gates; `/next` shows a "Waiting on you" inbox from Orca first; `orca.yaml` sets up every worktree.
