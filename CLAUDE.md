@@ -45,22 +45,24 @@ Update this section whenever a phase ends or a decision is made. Record the reas
 
 ## Agent roles
 
-Claude (Claude Code) is the builder. Codex and ChatGPT are the independent second opinion. Codex reads `AGENTS.md`, which points back to this file.
+Claude (Claude Code) is the builder. Codex and ChatGPT are the independent second opinion. Gemini is the sub-builder and a second researcher: it takes small, scoped tasks Claude hands off and never plans or reviews. Codex and Gemini read `AGENTS.md`, which points back to this file.
 
-| Phase | Claude: plans and builds | Codex / ChatGPT: reviews and challenges |
-|---|---|---|
-| 01 Idea | Superpowers brainstorm → spec | ChatGPT: challenge the spec, research, transcribe videos |
-| 02–03 Scaffold | Builds everything | Reviews the porting-strategy decision |
-| 04 Iterate | Builds features and variants | Reviews every PR; writes Playwright tests from the acceptance criteria |
-| 05 Sign-off | Impeccable `/audit` | Full review of the app before it's frozen |
-| 06 Native stack | Compares options and recommends one | Codex critiques the recommendation before you approve; ChatGPT for a second view |
-| 07–08 Backend and port | Builds | Security review: row-level security, secret handling |
-| 09 Release | Release tasks | ChatGPT: icon ideas, download-page copy |
+| Phase | Claude: plans and builds | Codex / ChatGPT: reviews and challenges | Gemini: sub-builds and researches |
+|---|---|---|---|
+| 01 Idea | Superpowers brainstorm → spec | ChatGPT: challenge the spec, research, transcribe videos | Deep Research and NotebookLM on similar apps and sources |
+| 02–03 Scaffold | Builds everything | Reviews the porting-strategy decision | Not used |
+| 04 Iterate | Builds features and variants | Reviews every PR | Writes Playwright tests from the acceptance criteria; chores via Jules |
+| 05 Sign-off | Impeccable `/audit` | Full review of the app before it's frozen | Not used |
+| 06 Native stack | Compares options and recommends one | Codex critiques the recommendation before you approve; ChatGPT for a second view | Deep Research on the stack options, as input to Claude's comparison |
+| 07–08 Backend and port | Builds | Security review: row-level security, secret handling | Chores and tests for ported screens |
+| 09 Release | Release tasks | ChatGPT: icon ideas, download-page copy | Not used |
 
 - Codex reviews every PR automatically: in Codex settings, turn on **Code review** and **Automatic reviews** for the repo (needs Codex cloud connected to GitHub). Comment `@codex review` to request one by hand, or `@codex review for security regressions` to focus it. Its rules are the "Review guidelines" section of `AGENTS.md`.
-- Only Claude plans features. Codex doesn't re-plan; two planners give competing task lists.
-- Tests written by Codex from the acceptance criteria are kept even when Claude's code disagrees with them: fix the code, or fix the criteria and say so in the PR.
-- When Claude's usage limit is reached, Codex can take a well-defined task under the same rules.
+- Only Claude plans features. Codex and Gemini don't re-plan; two planners give competing task lists.
+- Tests written by Gemini from the acceptance criteria are kept even when Claude's code disagrees with them: fix the code, or fix the criteria and say so in the PR.
+- Gemini runs as Antigravity CLI (`agy`) in Orca, or as Jules for async chores on GitHub. Gemini CLI no longer serves Google AI Pro accounts. Every Gemini task opens a PR, and Codex reviews it like any other.
+- Gemini tasks are scoped by Claude: one task, named files, written acceptance. Good fits: Playwright tests, dependency bumps, copy fixes, small refactors. Not features.
+- When Claude's usage limit is reached, Codex or Gemini can take a well-defined task under the same rules.
 
 ## Orca
 
@@ -70,7 +72,7 @@ Claude (Claude Code) is the builder. Codex and ChatGPT are the independent secon
 |---|---|
 | 01–03, 05–07, 09 | Not used. One Claude agent in a normal session. |
 | 04 Iterate: UI variants | Fan out one prompt to up to 3 agents: 2 Claude + 1 Codex, or 3 Claude with different design directions. Compare the previews, merge one, delete the rest. |
-| 04 Iterate: features | One Claude agent builds the feature; a second worktree has Codex write the Playwright tests from the same acceptance criteria. |
+| 04 Iterate: features | One Claude agent builds the feature; a second worktree has Gemini (Antigravity) write the Playwright tests from the same acceptance criteria. |
 | 08 Android port | One Claude agent per screen, each in its own worktree, all checked against the same acceptance criteria. Codex reviews each before merge. |
 
 Rules:
