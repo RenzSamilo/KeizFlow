@@ -21,7 +21,7 @@ Needs Claude Code 2.1.275 or later. Run `claude update` first if you're not sure
    /plugin install milestone-tracker --marketplace C:\path\to\your-app
    ```
 
-   Answer `y` to add the marketplace, then pick the user scope. Once this branch is on the repo's default branch on GitHub, this also works: `/plugin install milestone-tracker --marketplace RenzSamilo/Workflow_v1`.
+   Answer `y` to add the marketplace, then pick the user scope. Once this branch is on the repo's default branch on GitHub, this also works: `/plugin install milestone-tracker --marketplace RenzSamilo/KeizFlow`.
 3. Type `/tracker`.
 
 Installed from the folder, the tracker runs from the folder itself: after a `git pull`, type `/reload-plugins` to pick up changes.
