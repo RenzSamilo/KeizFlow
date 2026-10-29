@@ -21,12 +21,23 @@ What Multica adds: cards (`KEIZ-NN`), squads, the Co-Founder's next moves, run c
 | 01 Idea & scope | P Plan | Renz + one Claude session (Superpowers brainstorm) | Output is the spec; Multica `plan.md` becomes a pointer to it. Squads never brainstorm. |
 | 02 Web scaffold | 0 Setup + 1 Stack | Lead cards, Architect decision record | Porting strategy (step 2.1) is an Architect record; Renz approves. |
 | 03 Vercel live | 0 Setup gate | Stage-0 verification card | Done when a preview opens on Renz's phone. |
-| 04 Iterate loop | 2 Visual direction + 3 Build loop | Build loop in §3 | Design squad does tokens and screens; Build squad does features. Timebox rules unchanged. |
+| 04 Iterate loop | 2 Visual direction + 3 Build loop | **Renz, hands-on** (see §2a) | Renz builds features and UI live in his own session; agents review and refine afterwards. Timebox rules unchanged. |
 | 05 Sign-off gate | End-of-stage audit card + 4 Web release | Audit card, then named task from Renz | Impeccable `/audit` runs in Renz's Claude session (it's over Multica's 1 MiB import cap). |
 | 06 Native stack | 1 Stack (again) | Architect record, Co-Founder tier 3 brief | Codex challenge of the recommendation = Code and Evidence Reviewer on the record. |
 | 07 Supabase prod | 3 Build loop, high risk | Cards, Renz approves each merge | Security review by the Reviewer (row-level security, secrets). |
 | 08 Android build | 6 Android | One card per screen | Same acceptance criteria as web. Owner-device testing as in Multica today. |
 | 09 Test & share | 4 Release (Android) | Named task only | Release, signing and store stay Renz-only. |
+
+## 2a. Phase 04: Renz builds live, agents review after
+
+Decided 29 Oct 2026. Small UI and feature changes are faster and cheaper done live than through cards (a clean card costs ~5 runs).
+
+1. Renz works on a branch in his own session with the dev server running, and sees each change instantly.
+2. When a round's changes feel right, he pushes the branch and opens a PR (Vercel gives a preview).
+3. **One review card per PR, not per tweak.** Assigned to the Build squad: the Reviewer checks it against the acceptance criteria; Gemini adds missing Playwright tests; App Builder or Gemini does cleanup the Reviewer asks for.
+4. Merge follows the normal risk rules in §4.
+
+Default model for the live session is Renz's choice; using Antigravity (`agy`) for quick tweaks saves Claude usage.
 
 ## 3. Roles
 
@@ -42,7 +53,19 @@ KeizFlow says "Claude builds, Codex reviews, only Claude plans." Multica already
 | Software Architect | Claude Code | Porting strategy (2.1), native stack (06). |
 | Co-Founder | Claude Code | Next moves, low-risk merge OKs, tier-3 briefs to Renz. |
 | ChatGPT | Outside Multica | Spec challenge, research, icon ideas, download-page copy. Unchanged. |
-| Gemini | **Open, see §6 item 2** | Not placed yet. |
+| Gemini | Antigravity (`agy`) | **Takes load off Claude** (§6 item 2): tests, chores, research, first-pass builds of routine cards. Proposed agents in §3a. |
+
+### 3a. Moving load from Claude to Gemini
+
+Renz wants Claude usage preserved (it's his default LLM). Proposed split, in steps so quality can be checked:
+
+| Step | Move to Gemini (`agy`) | Stays on Claude |
+|---|---|---|
+| 1, now | New **Test Writer** (Playwright tests from acceptance criteria); **Reverse Engineer**; **Motion Designer**; research (Deep Research, NotebookLM) outside Multica | App Builder, UI Designer, Design System Designer, Architect, Co-Founder |
+| 2, after ~10 cards | New **Gemini Builder** for low-risk routine cards (chores, copy, small refactors, dependency bumps) | App Builder for medium/high-risk and new features |
+| 3, if step 2 holds up | Co-Founder on Gemini (removes the queue behind App Builder runs) | Architect, UI Designer |
+
+Codex keeps the Lead and Reviewer jobs, so Gemini's work is still reviewed by a different model family. Gemini never plans. Check the AI Pro `agy` limits before step 2.
 
 ## 4. Rules to merge
 
@@ -51,9 +74,9 @@ Where the two workflows overlap, this is the proposed combined rule.
 1. **Merging:** KeizFlow's "merge only when Checks is green" becomes part of Multica's low-risk test ("required checks passed on that exact head"). No change needed beyond naming the Checks workflow.
 2. **Risk labels:** adopt Multica's low/medium/high labels as is. Add: any change to `design/tokens.json`, the data module, or Supabase schema/RLS is medium at least.
 3. **Acceptance criteria:** every card's `Outcome:` cites the feature's acceptance criteria. The Reviewer flags any criterion with no test.
-4. **Playwright tests:** one test per main flow, Chromium + Android phone profile, as on `main`. Who writes them is open (§6 item 2).
+4. **Playwright tests:** one test per main flow, Chromium + Android phone profile, as on `main`. Gemini's Test Writer writes them (§3a).
 5. **Parking lot:** the Lead labels out-of-scope requests `parked` and adds them to `docs/parking-lot.md`, not only the Multica board.
-6. **Decisions:** one log only. Proposed: keep `docs/decisions.md` (KeizFlow name) and have Multica's `DECISIONS.md` rules point to it. Project Lead stays the sole writer.
+6. **Decisions:** one log only: `docs/decisions.md` (decided 29 Oct). Multica's `DECISIONS.md` rules point to it. Project Lead stays the sole writer.
 7. **Progress:** `docs/progress.md` stays the phase checklist; Multica `WORK.md` stays the one-page "now" view. `/next` reads both.
 8. **Timebox:** phase 04 rounds (1 week or 3 variants per screen) become a card field: `Round: n of 3`.
 9. **Secrets and evidence:** Multica's GitHub guard (5 MiB, no evidence/keys/APKs in git) replaces nothing on `main`; add it to the Checks workflow.
@@ -83,8 +106,8 @@ The library in `C:\dev\PROJECTS\_agents\` stays project-neutral. Nothing KeizFlo
    - B. **Research only, outside Multica:** Deep Research and NotebookLM for phase 01 and 06, like ChatGPT. No new agent.
    - C. **Keep no Gemini** in Multica for now.
    - Recommendation: **B now, A after the first milestone**, once you know whether Codex/Claude usage is the bottleneck.
-3. **Which app.** Is this for a new app built from KeizFlow, or for moving TRENv2 onto KeizFlow's phases?
-4. **Decision log name.** `docs/decisions.md` (KeizFlow) or `DECISIONS.md` at the root (Multica)?
+3. **Which app.** Decided: any future app. Rules stay app-neutral (no app names, stacks or card numbers); app facts go in each app's `AGENTS.md`.
+4. **Decision log name.** Decided: `docs/decisions.md`. It already exists and `/next` and every KeizFlow file already point to it.
 5. **Multica `main` deploys to production.** KeizFlow uses dev Supabase for production until phase 07. Keep Multica's low-risk auto-merge before phase 07, or require your OK on every merge until then?
 
 ## 7. Rollout (after the plan is approved)
