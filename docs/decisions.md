@@ -2,6 +2,12 @@
 
 One entry per decision, newest at the top. Keep each entry short: what was decided, why, and what it rules out.
 
+## 2026-10-29 · Milestone tracker pane
+
+- **Decision:** a Claude Code plugin (`tools/milestone-tracker`) shows phases, the current step, Claude's live tasks, Orca agents, decision gates and the next step in a pane beside the chat. It only reads `CLAUDE.md`, `docs/progress.md`, the Orca CLI, git and `gh`.
+- **Why:** progress stays visible without asking `/next`, and agents waiting on the user show up right away. No second file to keep in sync.
+- **Rules out:** a separate always-on-top window or desktop app for now; a tracker that writes progress itself.
+
 ## 2026-10-28 · Orca recipes, review inbox and worktree setup (Orca branch)
 
 - **Decision:** three orchestration recipes (variant fan-out, feature + test pair, screen port wave) with decision gates; `/next` shows a "Waiting on you" inbox from Orca first; `orca.yaml` sets up every worktree.

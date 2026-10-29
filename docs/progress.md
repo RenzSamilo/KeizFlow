@@ -1,6 +1,6 @@
 # Progress
 
-Tick a box (`[x]`) when a step is done. `/next` reads this file to pick your next task. Step numbers match the workflow map.
+Tick a box (`[x]`) when a step is done. `/next` reads this file to pick your next task, and the milestone tracker (`/tracker`) shows it beside the chat. Step numbers match the workflow map. Indent a checkbox under a step to make it a substep.
 
 ## 01 · Idea & scope
 

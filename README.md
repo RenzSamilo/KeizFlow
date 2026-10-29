@@ -41,6 +41,7 @@ Every step inside each phase is a checkbox in [`docs/progress.md`](docs/progress
 |---|---|
 | `/next` | Tells you where you are, your one next task, a 2-minute first action, and when it's done |
 | `/next <idea>` | Checks whether an idea fits the current step; parks it if not |
+| `/tracker` | Opens the milestone tracker beside the chat: phases, steps, Claude's tasks, Orca agents and what's next. Install once per computer, see [`tools/milestone-tracker`](tools/milestone-tracker/README.md) |
 
 ### Skills (install once per computer, one line per message in Claude Code)
 

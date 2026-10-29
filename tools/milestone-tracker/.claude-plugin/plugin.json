@@ -1,0 +1,29 @@
+{
+  "name": "milestone-tracker",
+  "version": "0.1.0",
+  "description": "A pane beside the chat that tracks the workflow's phases, steps, Claude's tasks and Orca agents",
+  "author": {
+    "name": "renzsamilo"
+  },
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "orcaCommand": {
+      "type": "string",
+      "title": "Orca command",
+      "description": "The Orca CLI to run. \"auto\" tries orca (orca.exe, orca.cmd on Windows; orca-ide on Linux). Set a full path if Orca isn't found.",
+      "default": "auto"
+    },
+    "refreshSeconds": {
+      "type": "number",
+      "title": "Refresh every (seconds)",
+      "description": "How often Orca agents, worktrees and the branch are re-read. PRs refresh every fourth time.",
+      "default": 30
+    },
+    "openOnStart": {
+      "type": "boolean",
+      "title": "Open on start",
+      "description": "Open the pane when a session starts, if the window is wide enough.",
+      "default": true
+    }
+  }
+}

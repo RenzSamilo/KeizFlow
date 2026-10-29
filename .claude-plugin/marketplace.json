@@ -1,0 +1,14 @@
+{
+  "name": "workflow-tools",
+  "owner": {
+    "name": "renzsamilo"
+  },
+  "description": "Tools for the Web-to-Android workflow",
+  "plugins": [
+    {
+      "name": "milestone-tracker",
+      "source": "./tools/milestone-tracker",
+      "description": "A pane beside the chat that tracks the workflow's phases, steps, Claude's tasks and Orca agents"
+    }
+  ]
+}
