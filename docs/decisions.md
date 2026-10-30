@@ -4,7 +4,7 @@ One entry per decision, newest at the top. Keep each entry short: what was decid
 
 ## 2026-10-30 · Plain-English commands and a glossary
 
-- **Decision:** add `/huh` (re-explain the last message in plain English), `/catchup` (what changed and what's waiting on you) and `/in-your-own-words` (agent says your goal back before starting), plus `docs/glossary.md`, which `/huh` grows over time. All agents use the glossary's words.
+- **Decision:** add `/huh` (re-explain the last message in plain English), `/catchup` (what changed and what's waiting on you) and `/inyow` (agent says your goal back before starting), plus `docs/glossary.md`, which `/huh` grows over time. All agents use the glossary's words.
 - **Why:** agents often use terms the user doesn't know yet. `/huh` combines Matt Pocock's `wait-what` (re-pitch using the project's glossary) with pstack's `bro` (talk like a person). The files are copied, not installed, because both plugins also bring planning and orchestration that compete with Superpowers and Orca.
 - **Rules out:** installing the whole Matt Pocock Skills or pstack plugins; a second glossary file (`GLOSSARY.md` at the root).
 

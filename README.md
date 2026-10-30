@@ -57,8 +57,8 @@ Type these in Claude Code (or Claude in Orca). Grouped by what they're for.
 
 | Command | What it does |
 |---|---|
-| `/in-your-own-words` | The agent says back what it thinks your goal is, then waits for your "yes" |
-| `/in-your-own-words <task>` | The same, for the task you're about to give |
+| `/inyow` | "In your own words": the agent says back what it thinks your goal is, then waits for your "yes" |
+| `/inyow <task>` | The same, for the task you're about to give |
 
 ### Design and polish (Impeccable)
 
@@ -105,7 +105,7 @@ Worktree, port and emulator commands are in [Orca CLI commands you'll see](#orca
 | Impeccable | The design commands above | 04, 05, 08 |
 | I Have ADHD | Answer-first replies | All |
 
-`/huh`, `/catchup` and `/in-your-own-words` need no install: they live in [`.claude/commands/`](.claude/commands/) and come with the repo.
+`/huh`, `/catchup` and `/inyow` need no install: they live in [`.claude/commands/`](.claude/commands/) and come with the repo.
 
 ## Who does what
 
@@ -127,7 +127,7 @@ Worktree, port and emulator commands are in [Orca CLI commands you'll see](#orca
 | [`docs/decisions.md`](docs/decisions.md) | Decision log: what, why, what it rules out |
 | [`docs/parking-lot.md`](docs/parking-lot.md) | Ideas that wait until after v1 |
 | [`docs/glossary.md`](docs/glossary.md) | Plain-English meanings of the terms agents use; `/huh` adds to it |
-| [`.claude/commands/`](.claude/commands/) | `/next`, `/huh`, `/catchup` and `/in-your-own-words` |
+| [`.claude/commands/`](.claude/commands/) | `/next`, `/huh`, `/catchup` and `/inyow` |
 | [`.github/workflows/checks.yml`](.github/workflows/checks.yml) | Lint, type check, tests, build and Chromium browser tests on every PR |
 | [`.env.example`](.env.example) | Environment variable names, no values |
 | [`orca.yaml`](orca.yaml) | Orca setup for every new worktree |

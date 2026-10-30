@@ -218,7 +218,7 @@ Install once per computer in Claude Code (send each line as its own message):
 | Impeccable | 04, 05, 08: `/critique`, `/polish`, `/audit` |
 | I Have ADHD | All: answer-first replies |
 
-Plain-English commands, copied into `.claude/commands/` instead of installing their plugins: `/huh` (Matt Pocock's `wait-what` + pstack's `bro`), `/catchup` (pstack's `ketchup`), `/in-your-own-words` (pstack). Only these files are taken from Matt Pocock Skills and pstack.
+Plain-English commands, copied into `.claude/commands/` instead of installing their plugins: `/huh` (Matt Pocock's `wait-what` + pstack's `bro`), `/catchup` (pstack's `ketchup`), `/inyow` (pstack). Only these files are taken from Matt Pocock Skills and pstack.
 
 Workspace: Orca (04, 08), see "Orca" above.
 
