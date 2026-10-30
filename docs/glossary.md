@@ -6,6 +6,7 @@ Plain-English meanings of the words agents use in this workflow. Agents use thes
 |---|---|
 | Acceptance criteria | A short list of things a feature must do for it to count as done, written before it's built. |
 | Agent | An AI that can read and change files and run commands on its own, like Claude, Codex or Gemini. |
+| API | The set of commands one piece of software offers so other code can use it. |
 | APK | The install file for an Android app, like an `.exe` on Windows. |
 | Branch | A separate copy of the code where changes are made without touching the main version. |
 | Checks (CI) | Automatic tests GitHub runs on every change; "green" means they all passed. |
@@ -18,9 +19,11 @@ Plain-English meanings of the words agents use in this workflow. Agents use thes
 | Environment variable | A setting, often a secret key, that the app reads when it starts instead of keeping it in the code. |
 | Git | The tool that tracks every change to the code and lets you go back. |
 | Keystore | The file that signs the Android app to prove updates come from you; losing it means users must reinstall. |
+| Library | A ready-made package of code the app uses, like Next.js or the Supabase client. |
 | Lint | An automatic check for sloppy or risky code patterns. |
 | Merge | Adding a branch's changes into another branch, usually `main`. |
 | Migration | A small script that changes the database's structure, such as adding a table. |
+| Node.js | The program that runs JavaScript tools on your computer; many install commands (`npx`, `npm`) need it. |
 | Orca | The desktop app that runs several agents side by side, each in its own worktree. |
 | Parking lot | The list of ideas that wait until after v1 (`docs/parking-lot.md`). |
 | Playwright | A tool that opens the app in a browser and clicks through it automatically to test it. |

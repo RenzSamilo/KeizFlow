@@ -2,6 +2,12 @@
 
 One entry per decision, newest at the top. Keep each entry short: what was decided, why, and what it rules out.
 
+## 2026-10-30 · Context7 and two Codex plugin commands
+
+- **Decision:** add Context7 (current library docs for agents) and OpenAI's Codex plugin for Claude Code, using only `/codex:review` (local review before pushing) and `/codex:adversarial-review` (design challenge, phase 06).
+- **Why:** agents, especially Flash and Argon, make mistakes with outdated APIs; Context7 fixes that at the source. The Codex plugin runs step 2 of the review flow without switching to a Codex terminal.
+- **Rules out:** the plugin's review gate (Claude and Codex loop and drain limits), `/codex:rescue` and `/codex:transfer` (they hand work to Codex outside the tier rules).
+
 ## 2026-10-30 · Stricter Codex review rules from Thermos
 
 - **Decision:** add condensed versions of Thermos's two review checklists (bugs and breakage, code quality) to the "Review guidelines" in `AGENTS.md`, plus a "How to report" section.
