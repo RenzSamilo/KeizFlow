@@ -7,7 +7,7 @@ One entry per decision, newest at the top. Keep each entry short: what was decid
 - **Decision:** Claude orchestrates in Orca and gives each task a tier. Easy goes to Gemini 3.8 Flash, medium to Gemini 4 Argon (including hard tasks that are fully specified and already tested), and hard or foundational to Claude Opus 5.5. A task escalates one tier after two failed attempts.
 - **Why:** this saves Claude usage for the work where it's clearly stronger. Argon matches or beats Opus 5.5 on building benchmarks (Vibe Code Bench 91.9 vs 90.3) but trails it on hard agentic coding (Terminal-bench 4.0 57.4 vs 66.4; FrontierSWE v2 55.0 vs 62.3). AI Pro gets Argon in Antigravity with a separate weekly quota.
 - **Rules out:** Gemini on shared or foundational files; medium tasks falling back to Flash when Argon's quota runs out. This replaces "no Gemini building features" from the entry below: Argon may build scoped features.
-- **Unverified:** whether Orca can pin the Argon model per Antigravity worker. If it can't, pick the model in Antigravity before starting the worker.
+- **Verified 2026-10-30 (Renz's test run):** Orca's `worker-start --agent --model` runs each worker on its own model: `claude-sonnet-5-5`, `gemini-3.8-flash` and `gemini-4-argon` each named themselves correctly. Orca doesn't validate model ids, so a wrong id silently falls back to Flash.
 
 ## 2026-10-29 · Gemini joins as sub-builder and researcher
 

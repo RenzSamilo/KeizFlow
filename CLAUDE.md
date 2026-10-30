@@ -68,12 +68,14 @@ Claude (Claude Code) is the builder. Codex and ChatGPT are the independent secon
 
 Claude is the orchestrator: it plans, picks a tier for every task, and writes the tier into the task spec. Workers never re-tier their own task.
 
-| Tier | Worker | Takes | Examples |
+| Tier | Worker (`--agent` / `--model`) | Takes | Examples |
 |---|---|---|---|
-| Easy | Gemini 3.8 Flash (Antigravity CLI) | Mechanical tasks with one obvious answer | Dependency bumps, copy fixes, renames, small refactors in named files |
-| Medium | Gemini 4 Argon (Antigravity CLI) | Scoped building with written acceptance; also hard tasks that are fully specified and already have tests to check against | Playwright tests from acceptance criteria, one screen or variant that touches only its own files, ported screens in phase 08 |
-| Hard | Claude Opus 5.5 | Foundational, shared or open-ended work | Data module, `design/tokens.json` and generated themes, navigation, Supabase schema and row-level security, debugging with no clear cause, anything without acceptance criteria |
+| Easy | Gemini 3.8 Flash (`antigravity` / `gemini-3.8-flash`) | Mechanical tasks with one obvious answer | Dependency bumps, copy fixes, renames, small refactors in named files |
+| Medium | Gemini 4 Argon (`antigravity` / `gemini-4-argon`) | Scoped building with written acceptance; also hard tasks that are fully specified and already have tests to check against | Playwright tests from acceptance criteria, one screen or variant that touches only its own files, ported screens in phase 08 |
+| Hard | Claude Opus 5.5 (`claude` / `claude-opus-5-5`) | Foundational, shared or open-ended work | Data module, `design/tokens.json` and generated themes, navigation, Supabase schema and row-level security, debugging with no clear cause, anything without acceptance criteria |
 
+- **Start a worker on its tier's model:** `orca orchestration worker-start --spec "<task>" --repo <repo> --worktree new-top-level --name <name> --agent <agent> --model <model-id> --json`. When it finishes: `orca orchestration check --wait`, then ack, then `worker-release`.
+- **Confirm the model before the real task.** Orca doesn't validate `--model`: a wrong id (for example `gemini-argon`) starts without an error, the receipt still shows the requested model, and the worker silently runs Flash. Have each worker name its model in its first reply, and take ids from the provider's model list, never from memory.
 - **Pick the lowest tier that fits.** When in doubt between two tiers, pick the higher one.
 - **Escalate after two failed attempts:** Flash → Argon → Opus. Note the escalation in the PR.
 - **Argon's quota is weekly** on Google AI Pro, with no 5-hour refill, and its size isn't published. Check what's left in Antigravity's model menu before a big wave. When it runs out, medium tasks wait for the reset or go to Opus; they never drop to Flash. Keep AI Credit Overages set to **Never** in Antigravity settings.
@@ -107,7 +109,7 @@ Ready-made plans for Orca's orchestration skill, in `docs/orca/recipes/`. Each h
 | Recipe | Phase | What it runs |
 |---|---|---|
 | `variant-fanout.md` | 04 | Up to 3 design directions for one screen → you pick the winner |
-| `feature-test-pair.md` | 04 | Claude builds the feature while Codex writes its tests |
+| `feature-test-pair.md` | 04 | One worker builds the feature while a different one writes its tests |
 | `screen-port-wave.md` | 08 | Shared files first, then up to 3 screens in parallel, parity check on the emulator |
 
 Orchestration is experimental: turn it on in Orca's **Settings → Experimental**. Task specs follow Orca's format: target, change, constraints, ownership, observable acceptance.
