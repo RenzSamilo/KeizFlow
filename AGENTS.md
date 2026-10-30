@@ -21,10 +21,11 @@ Don't plan or re-plan features. Claude plans them with Superpowers, and the plan
 Claude builds and plans; you are the sub-builder. You run as Antigravity CLI in an Orca worktree, or as Jules on GitHub. See "Agent roles" in `CLAUDE.md`.
 
 - **Write browser tests:** turn acceptance criteria into Playwright tests (Chromium, Android phone profile) without looking at how the feature was built.
-- **Scoped chores:** dependency bumps, copy fixes and small refactors that Claude or the user hands you, one task at a time, touching only the files named.
+- **Scoped chores (Flash):** dependency bumps, copy fixes and small refactors that Claude or the user hands you, one task at a time, touching only the files named.
+- **Scoped building (Argon):** one screen, variant or feature with written acceptance criteria, touching only its own files. Never the data module, tokens, navigation or Supabase schema. The tier is set in the task spec (see "Worker tiers in Orca" in `CLAUDE.md`); don't change it.
 - **Open a PR for every task.** Codex reviews it; don't review other agents' PRs.
 
-Don't plan or re-plan features, and don't build features unless asked as a backup builder. Stay inside your worktree's branch and don't edit files another agent owns.
+Don't plan or re-plan features, and don't build anything above your task's tier. If a task fails twice, stop and report it so Claude can escalate it. Stay inside your worktree's branch and don't edit files another agent owns.
 
 ## Review guidelines
 

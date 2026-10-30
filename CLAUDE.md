@@ -45,7 +45,7 @@ Update this section whenever a phase ends or a decision is made. Record the reas
 
 ## Agent roles
 
-Claude (Claude Code) is the builder. Codex and ChatGPT are the independent second opinion. Gemini is the sub-builder and a second researcher: it takes small, scoped tasks Claude hands off and never plans or reviews. Codex and Gemini read `AGENTS.md`, which points back to this file.
+Claude (Claude Code) is the builder. Codex and ChatGPT are the independent second opinion. Gemini is the sub-builder and a second researcher: it takes scoped tasks Claude hands off, by tier (Flash for easy, Argon for medium), and never plans or reviews. Codex and Gemini read `AGENTS.md`, which points back to this file.
 
 | Phase | Claude: plans and builds | Codex / ChatGPT: reviews and challenges | Gemini: sub-builds and researches |
 |---|---|---|---|
@@ -61,8 +61,24 @@ Claude (Claude Code) is the builder. Codex and ChatGPT are the independent secon
 - Only Claude plans features. Codex and Gemini don't re-plan; two planners give competing task lists.
 - Tests written by Gemini from the acceptance criteria are kept even when Claude's code disagrees with them: fix the code, or fix the criteria and say so in the PR.
 - Gemini runs as Antigravity CLI (`agy`) in Orca, or as Jules for async chores on GitHub. Gemini CLI no longer serves Google AI Pro accounts. Every Gemini task opens a PR, and Codex reviews it like any other.
-- Gemini tasks are scoped by Claude: one task, named files, written acceptance. Good fits: Playwright tests, dependency bumps, copy fixes, small refactors. Not features.
+- Gemini tasks are scoped by Claude: one task, named files, written acceptance. Flash takes easy chores; Argon takes medium tasks, including single screens and variants (see "Worker tiers in Orca"). Neither builds shared or foundational files.
 - When Claude's usage limit is reached, Codex or Gemini can take a well-defined task under the same rules.
+
+### Worker tiers in Orca
+
+Claude is the orchestrator: it plans, picks a tier for every task, and writes the tier into the task spec. Workers never re-tier their own task.
+
+| Tier | Worker | Takes | Examples |
+|---|---|---|---|
+| Easy | Gemini 3.8 Flash (Antigravity CLI) | Mechanical tasks with one obvious answer | Dependency bumps, copy fixes, renames, small refactors in named files |
+| Medium | Gemini 4 Argon (Antigravity CLI) | Scoped building with written acceptance; also hard tasks that are fully specified and already have tests to check against | Playwright tests from acceptance criteria, one screen or variant that touches only its own files, ported screens in phase 08 |
+| Hard | Claude Opus 5.5 | Foundational, shared or open-ended work | Data module, `design/tokens.json` and generated themes, navigation, Supabase schema and row-level security, debugging with no clear cause, anything without acceptance criteria |
+
+- **Pick the lowest tier that fits.** When in doubt between two tiers, pick the higher one.
+- **Escalate after two failed attempts:** Flash → Argon → Opus. Note the escalation in the PR.
+- **Argon's quota is weekly** on Google AI Pro, with no 5-hour refill, and its size isn't published. Check what's left in Antigravity's model menu before a big wave. When it runs out, medium tasks wait for the reset or go to Opus; they never drop to Flash. Keep AI Credit Overages set to **Never** in Antigravity settings.
+- **Tests stay independent:** the worker that writes a feature's tests is never the one that builds it.
+- Codex still reviews every PR, whatever the tier.
 
 ## Orca
 
@@ -72,8 +88,8 @@ Claude (Claude Code) is the builder. Codex and ChatGPT are the independent secon
 |---|---|
 | 01–03, 05–07, 09 | Not used. One Claude agent in a normal session. |
 | 04 Iterate: UI variants | Fan out one prompt to up to 3 agents: 2 Claude + 1 Codex, or 3 Claude with different design directions. Compare the previews, merge one, delete the rest. |
-| 04 Iterate: features | One Claude agent builds the feature; a second worktree has Gemini (Antigravity) write the Playwright tests from the same acceptance criteria. |
-| 08 Android port | One Claude agent per screen, each in its own worktree, all checked against the same acceptance criteria. Codex reviews each before merge. |
+| 04 Iterate: features | The tier's worker builds the feature (Argon for scoped features, Opus for foundational ones); a second worktree has Argon write the Playwright tests from the same acceptance criteria. If Argon builds, Opus writes the tests. |
+| 08 Android port | Opus ports the shared files first; then one worker per screen (Argon by default, Opus for complex screens), each in its own worktree, all checked against the same acceptance criteria. Codex reviews each before merge. |
 
 Rules:
 
