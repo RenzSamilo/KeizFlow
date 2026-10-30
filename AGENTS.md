@@ -16,6 +16,10 @@ If asked "what's next?", follow `.claude/commands/next.md`: read `docs/progress.
 
 Don't plan or re-plan features. Claude plans them with Superpowers, and the plan lives in the PR or `docs/`.
 
+## Plain English
+
+The user is new to software terms. In PR descriptions, review comments and replies, use the words in `docs/glossary.md`, and explain any other technical term in one short sentence the first time you use it.
+
 ## Your role (Gemini)
 
 Claude builds and plans; you are the sub-builder. You run as Antigravity CLI in an Orca worktree, or as Jules on GitHub. See "Agent roles" in `CLAUDE.md`.

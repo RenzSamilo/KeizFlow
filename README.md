@@ -35,12 +35,53 @@ Every step inside each phase is a checkbox in [`docs/progress.md`](docs/progress
 
 ## Commands
 
-### Your guide
+Type these in Claude Code (or Claude in Orca). Grouped by what they're for.
+
+### Find your way
 
 | Command | What it does |
 |---|---|
 | `/next` | Tells you where you are, your one next task, a 2-minute first action, and when it's done |
 | `/next <idea>` | Checks whether an idea fits the current step; parks it if not |
+
+### When an agent loses you
+
+| Command | What it does |
+|---|---|
+| `/huh` | Re-explains the agent's last message in plain English, with the context you're missing. Adds any new term to the [glossary](docs/glossary.md) |
+| `/huh <word or part>` | Explains just that word or part |
+| `/catchup` | After a break: what changed since your last message, and every decision waiting on you, with the agent's pick |
+| `/catchup <topic>` | The same, for one topic only |
+
+### Before work starts
+
+| Command | What it does |
+|---|---|
+| `/inyow` | "In your own words": the agent says back what it thinks your goal is, then waits for your "yes" |
+| `/inyow <task>` | The same, for the task you're about to give |
+
+### Design and polish (Impeccable)
+
+| Command | What it does | Phases |
+|---|---|---|
+| `/critique` | Design feedback while you iterate | 04 |
+| `/polish` | Final cleanup before merging | 04, 08 |
+| `/audit` | Accessibility and responsive check at the sign-off gate | 05 |
+
+### Review (Codex)
+
+| How | What happens |
+|---|---|
+| Automatic reviews on | Codex reviews every new PR by itself |
+| `/review` in a Codex terminal | Quick local review in an Orca worktree before you push (see [Review flow](#review-flow)) |
+| Comment `@codex review` | Requests a review by hand |
+| Comment `@codex review for security regressions` | Review with a specific focus |
+
+Codex follows the "Review guidelines" in [`AGENTS.md`](AGENTS.md).
+
+### Orca
+
+Worktree, port and emulator commands are in [Orca CLI commands you'll see](#orca-cli-commands-youll-see).
 
 ### Skills (install once per computer, one line per message in Claude Code)
 
@@ -61,18 +102,10 @@ Every step inside each phase is a checkbox in [`docs/progress.md`](docs/progress
 | Superpowers | Brainstorm → plan → build → review for new features | All |
 | Ponytail | Reuse existing code before writing new code | 02, 04, 08 |
 | UI UX Pro Max | Generate the design system and palettes | 02, 04 |
-| Impeccable | `/critique` while iterating, `/polish` before merging, `/audit` at sign-off | 04, 05, 08 |
+| Impeccable | The design commands above | 04, 05, 08 |
 | I Have ADHD | Answer-first replies | All |
 
-### Codex review
-
-| How | What happens |
-|---|---|
-| Automatic reviews on | Codex reviews every new PR by itself |
-| Comment `@codex review` | Requests a review by hand |
-| Comment `@codex review for security regressions` | Review with a specific focus |
-
-Codex follows the "Review guidelines" in [`AGENTS.md`](AGENTS.md).
+`/huh`, `/catchup` and `/inyow` need no install: they live in [`.claude/commands/`](.claude/commands/) and come with the repo.
 
 ## Who does what
 
@@ -93,7 +126,8 @@ Codex follows the "Review guidelines" in [`AGENTS.md`](AGENTS.md).
 | [`docs/progress.md`](docs/progress.md) | Checklist of every step; `/next` reads it |
 | [`docs/decisions.md`](docs/decisions.md) | Decision log: what, why, what it rules out |
 | [`docs/parking-lot.md`](docs/parking-lot.md) | Ideas that wait until after v1 |
-| [`.claude/commands/next.md`](.claude/commands/next.md) | The `/next` command |
+| [`docs/glossary.md`](docs/glossary.md) | Plain-English meanings of the terms agents use; `/huh` adds to it |
+| [`.claude/commands/`](.claude/commands/) | `/next`, `/huh`, `/catchup` and `/inyow` |
 | [`.github/workflows/checks.yml`](.github/workflows/checks.yml) | Lint, type check, tests, build and Chromium browser tests on every PR |
 | [`.env.example`](.env.example) | Environment variable names, no values |
 | [`orca.yaml`](orca.yaml) | Orca setup for every new worktree |
@@ -108,6 +142,7 @@ Codex follows the "Review guidelines" in [`AGENTS.md`](AGENTS.md).
 - **Tokens in one file:** `design/tokens.json` generates both web CSS and the Android theme.
 - **No secrets in git:** keys live in Vercel, Supabase and a password manager.
 - **Green checks to merge.**
+- **Plain English:** agents use the words in [`docs/glossary.md`](docs/glossary.md). Lost? Type `/huh`.
 - **Dev vs prod:** previews use the dev Supabase project; real users only touch prod.
 - **APK first:** v1 ships as a signed APK on GitHub Releases and a download page. Play Store comes later.
 
