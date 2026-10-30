@@ -42,6 +42,8 @@ Update this section whenever a phase ends or a decision is made. Record the reas
 - Use Superpowers' brainstorm → plan cycle for new features. Small visual tweaks (colors, spacing, copy, one component's layout) are direct prompts without it.
 - Never commit secrets or signing keys. Real values live in Vercel, Supabase and a password manager; `.env.example` lists the names only.
 - A pull request merges only when the Checks workflow is green.
+- Look up library and API usage with Context7 before writing code against a library, instead of relying on memory.
+- From the Codex plugin, use only `/codex:review` and `/codex:adversarial-review`. Keep its review gate off, and never use `/codex:rescue` or `/codex:transfer`: tasks go to workers by tier.
 - Talk to the user in plain English, using the words in `docs/glossary.md`. The first time a new technical term comes up, explain it in one short sentence. When the user types `/huh`, re-explain your last message (`.claude/commands/huh.md`).
 
 ## Agent roles
@@ -54,7 +56,7 @@ Claude (Claude Code) is the builder. Codex and ChatGPT are the independent secon
 | 02–03 Scaffold | Builds everything | Reviews the porting-strategy decision | Not used |
 | 04 Iterate | Builds features and variants | Reviews every PR | Writes Playwright tests from the acceptance criteria; chores via Jules |
 | 05 Sign-off | Impeccable `/audit` | Full review of the app before it's frozen | Not used |
-| 06 Native stack | Compares options and recommends one | Codex critiques the recommendation before you approve; ChatGPT for a second view | Deep Research on the stack options, as input to Claude's comparison |
+| 06 Native stack | Compares options and recommends one | Codex critiques the recommendation before you approve (`/codex:adversarial-review`); ChatGPT for a second view | Deep Research on the stack options, as input to Claude's comparison |
 | 07–08 Backend and port | Builds | Security review: row-level security, secret handling | Chores and tests for ported screens |
 | 09 Release | Release tasks | ChatGPT: icon ideas, download-page copy | Not used |
 
@@ -134,7 +136,7 @@ Not used on purpose: SSH worktrees, per-workspace cloud environments, Linear/Jir
 Every change gets two Codex reviews: a quick local one in Orca before pushing, and the automatic one on GitHub before merging. Both follow the "Review guidelines" in `AGENTS.md`.
 
 1. **Build:** Claude finishes the change in its worktree.
-2. **Local review (Orca):** open a Codex terminal in the same worktree and run `/review`. Fix anything serious with Claude in that worktree. Use Orca's diff annotations for your own comments.
+2. **Local review (Orca):** run `/codex:review` from Claude in the same worktree (or open a Codex terminal there and run `/review`). Fix anything serious with Claude in that worktree. Use Orca's diff annotations for your own comments.
 3. **Push and open the PR.** The Checks workflow runs.
 4. **GitHub review (automatic):** Codex posts a review on the PR. Read it on GitHub or in Orca's PR view.
 5. **Fix:** for each Codex comment, open the PR's worktree (`orca worktree create --pr <number>`) and have Claude fix it, or reply on the comment explaining why it stays. Push; Codex re-reviews when asked with `@codex review`.
@@ -208,6 +210,16 @@ Install once per computer in Claude Code (send each line as its own message):
 /plugin install impeccable@impeccable
 /plugin marketplace add ayghri/i-have-adhd
 /plugin install i-have-adhd@i-have-adhd
+/plugin marketplace add openai/codex-plugin-cc
+/plugin install codex@openai-codex
+/reload-plugins
+/codex:setup
+```
+
+Context7 is set up from a normal terminal, not inside Claude Code (needs Node.js 22.13 or newer). It signs you in, makes its own API key, and adds a skill to Claude Code:
+
+```
+npx ctx7 setup --claude
 ```
 
 | Skill | Used in |
@@ -217,6 +229,8 @@ Install once per computer in Claude Code (send each line as its own message):
 | UI UX Pro Max | 02, 04: generates the design system and palettes |
 | Impeccable | 04, 05, 08: `/critique`, `/polish`, `/audit` |
 | I Have ADHD | All: answer-first replies |
+| Codex plugin | 04–08: `/codex:review` for the local review, `/codex:adversarial-review` to challenge a design (only these two) |
+| Context7 | 02, 04, 07, 08: current library docs, so agents don't use outdated APIs |
 
 Plain-English commands, copied into `.claude/commands/` instead of installing their plugins: `/huh` (Matt Pocock's `wait-what` + pstack's `bro`), `/catchup` (pstack's `ketchup`), `/inyow` (pstack). Only these files are taken from Matt Pocock Skills and pstack.
 

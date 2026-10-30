@@ -73,11 +73,16 @@ Type these in Claude Code (or Claude in Orca). Grouped by what they're for.
 | How | What happens |
 |---|---|
 | Automatic reviews on | Codex reviews every new PR by itself |
-| `/review` in a Codex terminal | Quick local review in an Orca worktree before you push (see [Review flow](#review-flow)) |
+| `/codex:review` in Claude | Quick local review before you push, without opening a Codex terminal (see [Review flow](#review-flow)) |
+| `/codex:review --base workflow-orca` | The same, for everything on your branch compared to `workflow-orca` |
+| `/codex:adversarial-review <what to question>` | Codex questions a design choice (is this the right approach? what could go wrong?) instead of hunting bugs. Use it for the phase 06 stack choice |
+| `/review` in a Codex terminal | The same local review, run in Codex itself |
 | Comment `@codex review` | Requests a review by hand |
 | Comment `@codex review for security regressions` | Review with a specific focus |
 
 Codex follows the "Review guidelines" in [`AGENTS.md`](AGENTS.md).
+
+Only these two `/codex:` commands are part of the workflow. Never turn on the plugin's review gate (`--enable-review-gate`): it makes Claude and Codex review each other in a loop that can use up your limits fast. Don't use `/codex:rescue` or `/codex:transfer`: Claude hands out tasks by tier instead.
 
 ### Orca
 
@@ -95,6 +100,16 @@ Worktree, port and emulator commands are in [Orca CLI commands you'll see](#orca
 /plugin install impeccable@impeccable
 /plugin marketplace add ayghri/i-have-adhd
 /plugin install i-have-adhd@i-have-adhd
+/plugin marketplace add openai/codex-plugin-cc
+/plugin install codex@openai-codex
+/reload-plugins
+/codex:setup
+```
+
+Context7 is set up from a normal terminal, not inside Claude Code (needs Node.js 22.13 or newer). It signs you in, makes its own API key, and adds a skill to Claude Code:
+
+```
+npx ctx7 setup --claude
 ```
 
 | Skill | Use it for | Phases |
@@ -104,6 +119,8 @@ Worktree, port and emulator commands are in [Orca CLI commands you'll see](#orca
 | UI UX Pro Max | Generate the design system and palettes | 02, 04 |
 | Impeccable | The design commands above | 04, 05, 08 |
 | I Have ADHD | Answer-first replies | All |
+| Codex plugin | Ask Codex for a review from inside Claude (commands above) | 04–08 |
+| Context7 | Agents read up-to-date docs for Next.js, Supabase, Expo and other libraries instead of guessing | 02, 04, 07, 08 |
 
 `/huh`, `/catchup` and `/inyow` need no install: they live in [`.claude/commands/`](.claude/commands/) and come with the repo.
 
@@ -179,7 +196,7 @@ Paste a recipe's prompt into Claude in Orca. The orchestrator runs the workers a
 | Step | Where | What |
 |---|---|---|
 | 1. Build | Orca | Claude finishes the change in its worktree |
-| 2. Local review | Orca | Codex terminal in the same worktree → `/review`; fix serious issues before pushing |
+| 2. Local review | Orca | `/codex:review` in Claude (or `/review` in a Codex terminal) in the same worktree; fix serious issues before pushing |
 | 3. Open PR | GitHub | Checks workflow runs |
 | 4. Automatic review | GitHub (also visible in Orca) | Codex posts a review on the PR |
 | 5. Fix | Orca | `orca worktree create --pr <number>`, Claude fixes each comment, or reply why it stays |
