@@ -42,3 +42,31 @@ Codex code review reads this section on every pull request, whether triggered au
 - Every Supabase table has row-level security enabled, with policies that limit users to their own data.
 - New ideas outside the PR's feature belong in `docs/parking-lot.md`, not in the code.
 - Don't comment on formatting or naming the linter already enforces.
+
+### Bugs and breakage
+
+Adapted from Thermos's `thermo-nuclear-review` ([cursor/plugins](https://github.com/cursor/plugins/tree/main/thermos), MIT).
+
+- Only report problems in code this PR adds or changes, not in old code it leaves alone.
+- Trace side effects past the diff: a change to the data module, navigation, tokens or a shared component can break screens the diff doesn't touch. Name the screen or flow that breaks.
+- Flag changes that break running the app locally: renamed or new environment variables not added to `.env.example`, changed ports, or a new manual setup step not written in the README.
+- Flag anything unfinished or behind a flag that becomes visible to users by mistake.
+- If the PR breaks something on purpose and says so, don't report it, unless the cost looks bigger than the PR seems to know.
+- Finish the research before reporting. Never write "this is fine if X handles it" when you can check X.
+
+### Code quality
+
+Adapted from Thermos's `thermo-nuclear-code-quality-review`.
+
+- Look first for a simpler shape: can the change be restructured so whole branches, helpers or modes disappear? Say so plainly when it can.
+- A PR that pushes a file from under 1,000 lines to over 1,000 needs a strong reason; ask whether it should be split first.
+- Flag new one-off `if` checks and special cases bolted into unrelated code. The logic belongs in its own function, component or module.
+- Flag wrappers that add a layer without making anything clearer, copy-pasted logic, and new helpers that duplicate one the repo already has.
+- Flag `any`, unnecessary casts and optional values that hide what the data really looks like.
+- Feature logic stays in its feature's files, not in shared code.
+
+### How to report
+
+- Fewer, high-confidence comments beat a long list. Never mark something high priority unless it is.
+- Order: bugs and security first, then breakage, then structure. Skip cosmetic notes when there are bigger problems.
+- Write every comment in plain English using the words in `docs/glossary.md`: say what breaks for the user, then the fix.

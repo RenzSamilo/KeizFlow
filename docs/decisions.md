@@ -2,6 +2,12 @@
 
 One entry per decision, newest at the top. Keep each entry short: what was decided, why, and what it rules out.
 
+## 2026-10-30 · Stricter Codex review rules from Thermos
+
+- **Decision:** add condensed versions of Thermos's two review checklists (bugs and breakage, code quality) to the "Review guidelines" in `AGENTS.md`, plus a "How to report" section.
+- **Why:** Codex already reviews every PR, so the stricter bar costs no Claude usage. Running Thermos itself would start two Claude review agents per PR for the same job.
+- **Rules out:** installing the Thermos plugin or running its review agents in Claude.
+
 ## 2026-10-30 · Plain-English commands and a glossary
 
 - **Decision:** add `/huh` (re-explain the last message in plain English), `/catchup` (what changed and what's waiting on you) and `/inyow` (agent says your goal back before starting), plus `docs/glossary.md`, which `/huh` grows over time. All agents use the glossary's words.
