@@ -35,7 +35,7 @@ Current round: _not started_ · started: _date_ · ends: _date + 1 week_
 - [ ] 4.2 Color schemes compared, tokens updated
 - [ ] 4.3 Features built, acceptance criteria written first
 - [ ] 4.4 Dev Supabase connected; data module switched to real data
-- [ ] 4.5 Playwright tests for every main flow (Gemini writes them)
+- [ ] 4.5 Playwright tests for every main flow (Argon writes them)
 - [ ] 4.6 Kept version polished with `/polish`
 - [ ] 4.7 Round closed: variants kept or dropped, new ideas in the parking lot
 

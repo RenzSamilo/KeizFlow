@@ -78,10 +78,10 @@ Codex follows the "Review guidelines" in [`AGENTS.md`](AGENTS.md).
 
 | | Role |
 |---|---|
-| Claude | Plans every feature with Superpowers and builds it. The only planner. |
+| Claude | Orchestrates in Orca and plans every feature with Superpowers; the only planner. Opus 5.5 builds the hard and foundational tasks. |
 | Codex | Reviews every PR, security review in phases 07–08. Backup builder. |
 | ChatGPT | Challenges the spec, research, transcripts, icon ideas, download-page copy. |
-| Gemini | Sub-builder: writes Playwright tests from acceptance criteria and does scoped chores (Antigravity CLI in Orca, Jules on GitHub). Deep Research in phases 01 and 06. Backup builder. |
+| Gemini | Sub-builder by tier (Antigravity CLI in Orca, Jules on GitHub). Flash 3.8: easy chores. Argon: Playwright tests, single screens and variants. Deep Research in phases 01 and 06. Backup builder. |
 
 ## Files
 

@@ -2,6 +2,13 @@
 
 One entry per decision, newest at the top. Keep each entry short: what was decided, why, and what it rules out.
 
+## 2026-10-30 · Worker tiers in Orca: Flash, Argon, Opus
+
+- **Decision:** Claude orchestrates in Orca and gives each task a tier. Easy goes to Gemini 3.8 Flash, medium to Gemini 4 Argon (including hard tasks that are fully specified and already tested), and hard or foundational to Claude Opus 5.5. A task escalates one tier after two failed attempts.
+- **Why:** this saves Claude usage for the work where it's clearly stronger. Argon matches or beats Opus 5.5 on building benchmarks (Vibe Code Bench 91.9 vs 90.3) but trails it on hard agentic coding (Terminal-bench 4.0 57.4 vs 66.4; FrontierSWE v2 55.0 vs 62.3). AI Pro gets Argon in Antigravity with a separate weekly quota.
+- **Rules out:** Gemini on shared or foundational files; medium tasks falling back to Flash when Argon's quota runs out. This replaces "no Gemini building features" from the entry below: Argon may build scoped features.
+- **Unverified:** whether Orca can pin the Argon model per Antigravity worker. If it can't, pick the model in Antigravity before starting the worker.
+
 ## 2026-10-29 · Gemini joins as sub-builder and researcher
 
 - **Decision:** Gemini (Google AI Pro) writes Playwright tests from acceptance criteria and takes scoped chores that Claude hands off, through Antigravity CLI in Orca or Jules on GitHub. It also runs Deep Research in phases 01 and 06. Codex keeps PR and security review and no longer writes tests.

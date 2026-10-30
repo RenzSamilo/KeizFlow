@@ -20,8 +20,8 @@ Supervise the wave and stop at the decision gate before merging.
 
 ## How the wave runs
 
-1. **Foundation first, one agent.** If not done yet: shared files (theme from `design/tokens.json`, data module, navigation shell) are ported by a single Claude worker. Every later wave depends on this task.
-2. **Screens in parallel, up to 3.** One Claude worker per screen, each in its own worktree.
+1. **Foundation first, one agent.** If not done yet: shared files (theme from `design/tokens.json`, data module, navigation shell) are ported by a single Opus worker. Every later wave depends on this task.
+2. **Screens in parallel, up to 3.** One worker per screen (Argon by default, Opus for complex screens), each in its own worktree.
 3. **Codex review per screen.** Each screen branch gets a PR; Codex's automatic review runs on it.
 4. **Parity check.** For each screen, install the debug APK on the emulator (`orca emulator install`, `orca emulator launch`) and walk through its acceptance criteria. Check `orca emulator logcat` for crashes.
 5. **Decision gate:** "Merge these screens: all, some, or none?" You answer after looking at the emulator and the review.
