@@ -42,6 +42,7 @@ Update this section whenever a phase ends or a decision is made. Record the reas
 - Use Superpowers' brainstorm → plan cycle for new features. Small visual tweaks (colors, spacing, copy, one component's layout) are direct prompts without it.
 - Never commit secrets or signing keys. Real values live in Vercel, Supabase and a password manager; `.env.example` lists the names only.
 - A pull request merges only when the Checks workflow is green.
+- Talk to the user in plain English, using the words in `docs/glossary.md`. The first time a new technical term comes up, explain it in one short sentence. When the user types `/huh`, re-explain your last message (`.claude/commands/huh.md`).
 
 ## Agent roles
 
@@ -216,6 +217,8 @@ Install once per computer in Claude Code (send each line as its own message):
 | UI UX Pro Max | 02, 04: generates the design system and palettes |
 | Impeccable | 04, 05, 08: `/critique`, `/polish`, `/audit` |
 | I Have ADHD | All: answer-first replies |
+
+Plain-English commands, copied into `.claude/commands/` instead of installing their plugins: `/huh` (Matt Pocock's `wait-what` + pstack's `bro`), `/catchup` (pstack's `ketchup`), `/in-your-own-words` (pstack). Only these files are taken from Matt Pocock Skills and pstack.
 
 Workspace: Orca (04, 08), see "Orca" above.
 

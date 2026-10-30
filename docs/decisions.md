@@ -2,6 +2,12 @@
 
 One entry per decision, newest at the top. Keep each entry short: what was decided, why, and what it rules out.
 
+## 2026-10-30 · Plain-English commands and a glossary
+
+- **Decision:** add `/huh` (re-explain the last message in plain English), `/catchup` (what changed and what's waiting on you) and `/in-your-own-words` (agent says your goal back before starting), plus `docs/glossary.md`, which `/huh` grows over time. All agents use the glossary's words.
+- **Why:** agents often use terms the user doesn't know yet. `/huh` combines Matt Pocock's `wait-what` (re-pitch using the project's glossary) with pstack's `bro` (talk like a person). The files are copied, not installed, because both plugins also bring planning and orchestration that compete with Superpowers and Orca.
+- **Rules out:** installing the whole Matt Pocock Skills or pstack plugins; a second glossary file (`GLOSSARY.md` at the root).
+
 ## 2026-10-30 · Worker tiers in Orca: Flash, Argon, Opus
 
 - **Decision:** Claude orchestrates in Orca and gives each task a tier. Easy goes to Gemini 3.8 Flash, medium to Gemini 4 Argon (including hard tasks that are fully specified and already tested), and hard or foundational to Claude Opus 5.5. A task escalates one tier after two failed attempts.
