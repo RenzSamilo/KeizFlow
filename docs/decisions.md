@@ -2,6 +2,13 @@
 
 One entry per decision, newest at the top. Keep each entry short: what was decided, why, and what it rules out.
 
+## 2026-10-31 · Haiku, not Sonnet, for easy fallbacks
+
+- **Decision:** when Flash is full, easy tasks go to Haiku 5.5 (`claude-haiku-5-5`) instead of Sonnet 5.5. Medium tasks still fall back to Sonnet 5.5.
+- **Why:** easy tasks have one obvious answer, so Haiku is enough, and it uses less of the Claude limit the orchestrator shares. Suggested by Renz.
+- **To check:** have the first Haiku worker name its model, since Orca doesn't validate model ids.
+- **Rules out:** Haiku for medium tasks.
+
 ## 2026-10-31 · Usage check and fallbacks before each hand-off
 
 - **Decision:** before starting any Orca worker, the orchestrator runs `scripts/usage/usage-check.mjs` and follows the fallback table in CLAUDE.md. 85% of any 5-hour or weekly limit counts as full; an unreadable limit counts as full; when every option for a task is full, it stops and tells the user.

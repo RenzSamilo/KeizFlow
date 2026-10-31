@@ -91,11 +91,11 @@ Before every `worker-start`, run `node scripts/usage/usage-check.mjs`. It report
 
 | Tier | First choice | If it's full | Then | Never |
 |---|---|---|---|---|
-| Easy | Flash | Sonnet 5.5 (`claude` / `claude-sonnet-5-5`) | Wait | — |
-| Medium | Argon | Sonnet 5.5 | Codex (`codex`, model id from Codex's model list) | Flash |
+| Easy | Flash | Haiku 5.5 (`claude` / `claude-haiku-5-5`) | Wait | — |
+| Medium | Argon | Sonnet 5.5 (`claude` / `claude-sonnet-5-5`) | Codex (`codex`, model id from Codex's model list) | Flash |
 | Hard | Opus 5.5 | Wait for the reset | — | Anything lower |
 
-- **Claude is one limit.** The orchestrator, Opus and Sonnet all use the same Claude plan. Claude workers start only while Claude is ok, so the orchestrator always keeps about 15% to finish its run.
+- **Claude is one limit.** The orchestrator, Opus, Sonnet and Haiku all use the same Claude plan. Haiku uses the least of it, which is why it takes easy fallbacks. Claude workers start only while Claude is ok, so the orchestrator always keeps about 15% to finish its run.
 - **Antigravity has more than one pool** (for example Flash and Argon may reset separately). Read the pool for the model you're about to start, not the overall status.
 - **If Codex builds a task, Opus reviews it,** because a model never reviews its own work. Note the switch in the PR.
 - **When a task's whole row is full, stop handing out work** and tell the user which limits are full and when each resets. Don't start anything new until one resets or the user says otherwise.
