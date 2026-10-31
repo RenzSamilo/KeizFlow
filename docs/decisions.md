@@ -2,6 +2,13 @@
 
 One entry per decision, newest at the top. Keep each entry short: what was decided, why, and what it rules out.
 
+## 2026-10-31 · Usage check and fallbacks before each hand-off
+
+- **Decision:** before starting any Orca worker, the orchestrator runs `scripts/usage/usage-check.mjs` and follows the fallback table in CLAUDE.md. 85% of any 5-hour or weekly limit counts as full; an unreadable limit counts as full; when every option for a task is full, it stops and tells the user.
+- **Why:** Orca shows usage but doesn't switch models by itself. Checking only at hand-off avoids losing a worker's progress mid-task. Sonnet shares the orchestrator's Claude limit, so Claude workers stop early enough to leave the orchestrator room to finish.
+- **How the numbers are read:** Claude from Claude Code's status line data (documented); Codex from `codex app-server`'s `account/rateLimits/read` (works, barely documented); Antigravity from `agy -p /usage --output-format json` (agy 1.1.11+; output layout not documented, so the script keeps the raw answer for checking).
+- **Rules out:** switching a running worker to another model; falling back to a weaker tier (medium never goes to Flash, hard never leaves Opus); Codex reviewing a task it built.
+
 ## 2026-10-30 · Context7 and two Codex plugin commands
 
 - **Decision:** add Context7 (current library docs for agents) and OpenAI's Codex plugin for Claude Code, using only `/codex:review` (local review before pushing) and `/codex:adversarial-review` (design challenge, phase 06).

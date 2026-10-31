@@ -30,10 +30,12 @@ Plain-English meanings of the words agents use in this workflow. Agents use thes
 | Preview link | A temporary web address Vercel makes for each branch, so you can try a change before it's merged. |
 | Production (prod) | The live version real users use. |
 | Pull request (PR) | A request to merge a branch, where the changes get reviewed before they go in. |
+| Rate limit | How much of a model you can use in a set time (for example 5 hours or a week) before you have to wait for it to reset. |
 | Repo (repository) | The project folder tracked by git, stored on GitHub. |
 | Review | Another agent (usually Codex) reading a PR and pointing out bugs or broken rules. |
 | Row-level security (RLS) | A Supabase rule that lets each user see and change only their own rows of data. |
 | Secret key | A password-like key that gives full access to a service; it never goes in the code. |
+| Status line | The info bar at the bottom of Claude Code; in KeizFlow it shows Claude's usage. |
 | Supabase | The online database and login service the app uses. |
 | Type check | An automatic check that each piece of code gets the kind of data it expects. |
 | Vercel | The service that hosts the web version of the app and makes preview links. |
