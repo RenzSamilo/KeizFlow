@@ -86,6 +86,13 @@ Only these two `/codex:` commands are part of the workflow. Never turn on the pl
 
 ### Orca
 
+| Command | What it does |
+|---|---|
+| `node scripts/usage/usage-check.mjs` | Shows whether Claude, Codex and Antigravity are ok, full (85%+) or unknown. The orchestrator runs it before every hand-off |
+| `node scripts/usage/usage-check.mjs --json` | The same, as data for the orchestrator |
+
+The bar at the bottom of Claude Code (the status line) shows Claude's 5-hour and weekly usage. It comes with the repo in `.claude/settings.json`, and it's what lets the usage check see Claude's numbers.
+
 Worktree, port and emulator commands are in [Orca CLI commands you'll see](#orca-cli-commands-youll-see).
 
 ### Skills (install once per computer, one line per message in Claude Code)
@@ -145,6 +152,8 @@ npx ctx7 setup --claude
 | [`docs/parking-lot.md`](docs/parking-lot.md) | Ideas that wait until after v1 |
 | [`docs/glossary.md`](docs/glossary.md) | Plain-English meanings of the terms agents use; `/huh` adds to it |
 | [`.claude/commands/`](.claude/commands/) | `/next`, `/huh`, `/catchup` and `/inyow` |
+| [`.claude/settings.json`](.claude/settings.json) | Turns on the KeizFlow status line |
+| [`scripts/usage/`](scripts/usage/) | The status line and the usage check |
 | [`.github/workflows/checks.yml`](.github/workflows/checks.yml) | Lint, type check, tests, build and Chromium browser tests on every PR |
 | [`.env.example`](.env.example) | Environment variable names, no values |
 | [`orca.yaml`](orca.yaml) | Orca setup for every new worktree |

@@ -85,6 +85,22 @@ Claude is the orchestrator: it plans, picks a tier for every task, and writes th
 - **Tests stay independent:** the worker that writes a feature's tests is never the one that builds it.
 - Codex still reviews every PR, whatever the tier.
 
+### Usage check before hand-off
+
+Before every `worker-start`, run `node scripts/usage/usage-check.mjs`. It reports Claude, Codex and Antigravity as **ok**, **full** (85% or more of a 5-hour or weekly limit) or **unknown**. Treat unknown as full. Running workers are never stopped; the check only decides who gets the next task.
+
+| Tier | First choice | If it's full | Then | Never |
+|---|---|---|---|---|
+| Easy | Flash | Sonnet 5.5 (`claude` / `claude-sonnet-5-5`) | Wait | — |
+| Medium | Argon | Sonnet 5.5 | Codex (`codex`, model id from Codex's model list) | Flash |
+| Hard | Opus 5.5 | Wait for the reset | — | Anything lower |
+
+- **Claude is one limit.** The orchestrator, Opus and Sonnet all use the same Claude plan. Claude workers start only while Claude is ok, so the orchestrator always keeps about 15% to finish its run.
+- **Antigravity has more than one pool** (for example Flash and Argon may reset separately). Read the pool for the model you're about to start, not the overall status.
+- **If Codex builds a task, Opus reviews it,** because a model never reviews its own work. Note the switch in the PR.
+- **When a task's whole row is full, stop handing out work** and tell the user which limits are full and when each resets. Don't start anything new until one resets or the user says otherwise.
+- Note every fallback in the PR, the same way as an escalation.
+
 ## Orca
 
 [Orca](https://github.com/stablyai/orca) (Stably AI's desktop app, not `orca-cli/orca`) runs several coding agents side by side, each in its own git worktree. Install: `brew install --cask stablyai/orca/orca` on macOS; see its README for Windows and Linux.
@@ -231,6 +247,7 @@ npx ctx7 setup --claude
 | I Have ADHD | All: answer-first replies |
 | Codex plugin | 04–08: `/codex:review` for the local review, `/codex:adversarial-review` to challenge a design (only these two) |
 | Context7 | 02, 04, 07, 08: current library docs, so agents don't use outdated APIs |
+| KeizFlow status line | All: shows Claude's 5-hour and weekly usage and saves it for the usage check. Comes with the repo (`.claude/settings.json`) |
 
 Plain-English commands, copied into `.claude/commands/` instead of installing their plugins: `/huh` (Matt Pocock's `wait-what` + pstack's `bro`), `/catchup` (pstack's `ketchup`), `/inyow` (pstack). Only these files are taken from Matt Pocock Skills and pstack.
 

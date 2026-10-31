@@ -1,0 +1,7 @@
+{
+  "statusLine": {
+    "type": "command",
+    "command": "node \"$(git rev-parse --show-toplevel)/scripts/usage/statusline.mjs\"",
+    "refreshInterval": 60
+  }
+}
